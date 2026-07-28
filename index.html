@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#16110f" />
+  <title>SAI 한 잔 이야기</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SAI · SUWON</p>
+        <h1>사이의 한 잔</h1>
+      </div>
+      <button id="randomFactBtn" class="icon-btn" aria-label="랜덤 상식">✦</button>
+    </header>
+
+    <section id="home" class="page active">
+      <div class="hero card">
+        <p class="eyebrow">당신이 주문한 한 잔을</p>
+        <h2>조금 더 재미있게.</h2>
+        <p>메뉴를 고르고 기다리는 동안, 그 술의 맛과 이야기를 만나보세요.</p>
+        <div class="hero-actions">
+          <button class="primary" data-go="menu">메뉴 보기</button>
+          <button class="secondary" data-go="recommend">취향으로 찾기</button>
+        </div>
+      </div>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h3>오늘의 추천</h3>
+          <span>사이에서 가볍게 시작하기</span>
+        </div>
+        <article class="feature-drink card" data-item-id="sai-night">
+          <div class="drink-art dark">SAI</div>
+          <div>
+            <span class="pill">시그니처</span>
+            <h4>사이, 그 밤</h4>
+            <p>상큼한 레몬과 검은빛 비주얼. 처음 방문한 날 가장 잘 어울리는 한 잔.</p>
+            <strong>13,000원</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h3>기다리는 동안</h3>
+          <span>30초 술 이야기</span>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-card" data-go="stories"><span>🥃</span><b>위스키 상식</b><small>글렌은 무슨 뜻일까?</small></button>
+          <button class="quick-card" data-go="quiz"><span>🍸</span><b>칵테일 퀴즈</b><small>롱아일랜드에 차가 들어갈까?</small></button>
+        </div>
+      </section>
+    </section>
+
+    <section id="menu" class="page">
+      <div class="section-head sticky-head">
+        <div><p class="eyebrow">SAI MENU</p><h2>오늘의 한 잔</h2></div>
+      </div>
+      <div id="categoryTabs" class="tabs"></div>
+      <div id="menuList" class="menu-list"></div>
+    </section>
+
+    <section id="recommend" class="page">
+      <div class="section-head"><div><p class="eyebrow">TASTE FINDER</p><h2>내 취향으로 찾기</h2></div></div>
+      <div class="card quiz-panel">
+        <label>어떤 맛이 좋아요?</label>
+        <div class="choice-grid" data-group="taste">
+          <button data-value="sweet">달콤한 맛</button><button data-value="fresh">상큼한 맛</button>
+          <button data-value="smooth">부드러운 맛</button><button data-value="smoky">훈연 향</button>
+        </div>
+        <label>술맛은 어느 정도가 좋아요?</label>
+        <div class="choice-grid" data-group="strength">
+          <button data-value="light">거의 안 느껴지게</button><button data-value="medium">적당하게</button><button data-value="strong">강하게</button>
+        </div>
+        <label>오늘 분위기는?</label>
+        <div class="choice-grid" data-group="mood">
+          <button data-value="easy">가볍게 한잔</button><button data-value="photo">사진이 예쁜 술</button>
+          <button data-value="challenge">새로운 술 도전</button><button data-value="slow">천천히 음미</button>
+        </div>
+        <button id="recommendBtn" class="primary full">내 술 추천받기</button>
+      </div>
+      <div id="recommendResult"></div>
+    </section>
+
+    <section id="stories" class="page">
+      <div class="section-head"><div><p class="eyebrow">30 SEC STORY</p><h2>기다리는 동안</h2></div></div>
+      <div id="storyList" class="story-list"></div>
+    </section>
+
+    <section id="quiz" class="page">
+      <div class="section-head"><div><p class="eyebrow">DRINK QUIZ</p><h2>오늘의 술 퀴즈</h2></div></div>
+      <div id="quizBox" class="card quiz-box"></div>
+    </section>
+
+    <nav class="bottom-nav">
+      <button class="active" data-go="home"><span>⌂</span>홈</button>
+      <button data-go="menu"><span>☰</span>메뉴</button>
+      <button data-go="recommend"><span>✦</span>추천</button>
+      <button data-go="stories"><span>◌</span>이야기</button>
+    </nav>
+  </main>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-sheet">
+      <button id="modalClose" class="modal-close">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

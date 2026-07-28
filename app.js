@@ -1,0 +1,35 @@
+const menuData=[
+{id:'sai-night',category:'시그니처',name:'사이, 그 밤',price:'13,000원',abv:'약 10~11도',desc:'상큼한 레몬과 검은빛 비주얼이 어우러진 사이의 대표 칵테일.',tags:['fresh','photo','light'],taste:{달콤함:3,상큼함:5,술맛:2},recommend:'처음 사이를 방문했거나 사진이 예쁜 술을 찾는 분',story:'밤처럼 깊은 색감 속에 산뜻한 레몬의 인상을 담은 사이의 시그니처입니다.'},
+{id:'temperature',category:'시그니처',name:'사이의 온도',price:'14,000원',abv:'강한 편',desc:'따뜻한 분위기와 강한 인상을 함께 담은 시그니처 칵테일.',tags:['strong','slow'],taste:{달콤함:2,상큼함:1,술맛:5},recommend:'한 잔을 천천히 오래 음미하고 싶은 분',story:'사람과 사람 사이의 온도를 술의 농도와 여운으로 표현한 메뉴입니다.'},
+{id:'long-island',category:'칵테일',name:'롱아일랜드 아이스티',price:'13,000원',abv:'약 12~14도',desc:'여러 증류주가 들어가지만 차처럼 부드럽고 상쾌하게 넘어가는 클래식.',tags:['fresh','strong','challenge'],taste:{달콤함:3,상큼함:4,술맛:4},recommend:'상쾌하지만 확실한 도수감을 원하는 분',story:'이름과 달리 일반적인 아이스티가 들어가지 않는 것으로 유명한 칵테일입니다.'},
+{id:'kahlua',category:'칵테일',name:'깔루아 밀크',price:'13,000원',abv:'부드러운 편',desc:'커피 리큐르와 우유가 만드는 달콤하고 편안한 맛.',tags:['sweet','smooth','easy'],taste:{달콤함:5,상큼함:0,술맛:1},recommend:'술맛이 강하지 않은 달콤한 칵테일을 원하는 분',story:'디저트처럼 마시기 좋아 칵테일 입문자에게 꾸준히 사랑받는 메뉴입니다.'},
+{id:'earlgrey',category:'하이볼',name:'얼그레이 하이볼',price:'13,000원',abv:'약 6~8도',desc:'홍차 향과 탄산이 어우러진 향긋하고 가벼운 하이볼.',tags:['fresh','smooth','easy'],taste:{달콤함:3,상큼함:3,술맛:2},recommend:'향긋하고 부담 없는 첫 잔을 원하는 분',story:'얼그레이의 베르가못 향이 위스키의 바닐라 향과 자연스럽게 어울립니다.'},
+{id:'laphroaig',category:'위스키',name:'라프로익 10년',price:'14,000원',abv:'피트 위스키',desc:'훈연, 바다, 소금기와 약품향이 강렬하게 남는 아일라 위스키.',tags:['smoky','strong','challenge','slow'],taste:{달콤함:1,상큼함:0,술맛:5},recommend:'평범한 위스키보다 강렬하고 기억에 남는 술을 원하는 분',story:'독특한 소독약 같은 향은 피트와 아일라섬의 해안 환경에서 오는 개성입니다.'},
+{id:'ardbeg',category:'위스키',name:'아드벡',price:'14,000원',abv:'피트 위스키',desc:'짙은 연기 속에 시트러스와 단맛이 숨어 있는 강렬한 위스키.',tags:['smoky','strong','challenge'],taste:{달콤함:2,상큼함:1,술맛:5},recommend:'피트 위스키를 제대로 경험해보고 싶은 분',story:'아드벡은 강한 연기향 속에서도 레몬과 바닐라 같은 섬세함을 찾는 재미가 있습니다.'},
+{id:'sai-icedtea',category:'논알콜',name:'사이 아이스티',price:'13,000원',abv:'논알콜',desc:'자몽과 레몬이 어우러진 상큼한 사이 스타일의 무알코올 칵테일.',tags:['fresh','sweet','light','easy'],taste:{달콤함:4,상큼함:5,술맛:0},recommend:'술 없이도 분위기 있는 한 잔을 즐기고 싶은 분',story:'술을 마시지 않아도 칵테일을 고르는 재미와 분위기는 그대로 느낄 수 있습니다.'},
+{id:'guinness',category:'맥주',name:'기네스',price:'11,000원',abv:'스타우트',desc:'부드러운 거품과 로스팅된 커피, 초콜릿 향이 특징인 흑맥주.',tags:['smooth','slow'],taste:{달콤함:2,상큼함:0,술맛:3},recommend:'탄산이 거칠지 않고 묵직한 맥주를 원하는 분',story:'질소 거품 덕분에 일반 라거보다 훨씬 크리미한 질감을 느낄 수 있습니다.'},
+{id:'nacho',category:'푸드',name:'나쵸',price:'5,000원',abv:'',desc:'칵테일과 위스키 사이사이에 가볍게 곁들이기 좋은 메뉴.',tags:['easy'],taste:{달콤함:0,상큼함:0,술맛:0},recommend:'간단한 안주가 필요한 분',story:'짭짤한 안주는 단맛이 있는 칵테일과 특히 잘 어울립니다.'}
+];
+const stories=[
+['싱글몰트의 ‘싱글’은?', '한 가지 원료라는 뜻이 아니라 한 증류소에서 만든 몰트위스키라는 뜻입니다. 여러 오크통의 원액을 섞어도 같은 증류소에서 나왔다면 싱글몰트가 될 수 있어요.'],
+['글렌은 무슨 뜻일까?', '스코틀랜드 지명에서 자주 보이는 Glen은 게일어로 골짜기라는 뜻입니다. 글렌피딕, 글렌리벳 같은 이름은 지역의 지형과 연결돼 있습니다.'],
+['위스키의 색은 어디서 올까?', '대부분의 색과 향은 오크통 숙성 과정에서 생깁니다. 새 오크통은 바닐라와 캐러멜 느낌을, 셰리 캐스크는 건과일과 견과류 느낌을 더해줍니다.'],
+['피트향은 왜 약품처럼 느껴질까?', '피트를 태운 연기로 맥아를 말릴 때 페놀 계열 향이 스며듭니다. 사람에 따라 소독약, 바다, 모닥불, 젖은 흙처럼 다르게 느껴집니다.'],
+['물 몇 방울을 넣는 이유', '고도수 위스키에 물을 아주 조금 넣으면 알코올 자극이 줄고 숨어 있던 향이 더 잘 느껴지기도 합니다. 정답은 없으니 조금씩 비교해보세요.'],
+['위스키는 오래될수록 무조건 좋을까?', '숙성연수는 품질의 절대 기준이 아닙니다. 오래 숙성하면 깊이가 생길 수 있지만 나무 맛이 지나치게 강해질 수도 있습니다. 균형이 더 중요합니다.']
+];
+const quiz={q:'싱글몰트의 ‘싱글’은 무엇을 의미할까요?',options:['한 가지 원료','한 증류소','한 개의 오크통','한 명의 제조자'],answer:1,explain:'정답은 한 증류소입니다. 여러 오크통의 원액을 섞어도 같은 증류소에서 만든 몰트위스키라면 싱글몰트가 될 수 있습니다.'};
+let currentCategory='시그니처';
+const pages=[...document.querySelectorAll('.page')];
+function go(id){pages.forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('[data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='menu')renderMenu();}
+document.addEventListener('click',e=>{const goBtn=e.target.closest('[data-go]');if(goBtn)go(goBtn.dataset.go);const item=e.target.closest('[data-item-id]');if(item)openDetail(item.dataset.itemId);});
+function renderTabs(){const cats=[...new Set(menuData.map(x=>x.category))];categoryTabs.innerHTML=cats.map(c=>`<button class="${c===currentCategory?'active':''}" data-cat="${c}">${c}</button>`).join('');categoryTabs.onclick=e=>{if(e.target.dataset.cat){currentCategory=e.target.dataset.cat;renderTabs();renderMenu();}}}
+function renderMenu(){renderTabs();menuList.innerHTML=menuData.filter(x=>x.category===currentCategory).map(x=>`<article class="menu-card" data-item-id="${x.id}"><h3>${x.name}</h3><strong>${x.price}</strong><p>${x.desc}</p></article>`).join('');}
+function openDetail(id){const x=menuData.find(v=>v.id===id);if(!x)return;modalContent.innerHTML=`<div class="detail-hero">${x.category==='위스키'?'WHISKY':'SAI'}</div><p class="eyebrow">${x.category}${x.abv?' · '+x.abv:''}</p><h2 class="detail-title">${x.name}</h2><div class="detail-price">${x.price}</div><div class="taste-bars">${Object.entries(x.taste).map(([k,v])=>`<div class="taste-row"><span>${k}</span><div class="bar"><i style="width:${v*20}%"></i></div></div>`).join('')}</div><div class="detail-block"><h4>이런 분께 추천해요</h4><p>${x.recommend}</p></div><div class="detail-block"><h4>이 술의 이야기</h4><p>${x.story}</p></div>`;modal.classList.add('open');modal.setAttribute('aria-hidden','false');}
+modalClose.onclick=()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')};modal.onclick=e=>{if(e.target===modal)modalClose.click()};
+document.querySelectorAll('.choice-grid button').forEach(b=>b.onclick=()=>{b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected')});
+recommendBtn.onclick=()=>{const vals=[...document.querySelectorAll('.choice-grid button.selected')].map(x=>x.dataset.value);let candidates=menuData.filter(x=>x.category!=='푸드');candidates.sort((a,b)=>vals.filter(v=>b.tags.includes(v)).length-vals.filter(v=>a.tags.includes(v)).length);const x=candidates[0];recommendResult.innerHTML=`<article class="recommend-card card" data-item-id="${x.id}"><p class="eyebrow">오늘의 추천</p><h3>${x.name}</h3><strong>${x.price}</strong><p>${x.recommend}</p><button class="secondary">자세히 보기</button></article>`;};
+function renderStories(){storyList.innerHTML=stories.map(([t,p],i)=>`<article class="story-card"><p class="eyebrow">STORY ${String(i+1).padStart(2,'0')}</p><h3>${t}</h3><p>${p}</p></article>`).join('');}
+function renderQuiz(){quizBox.innerHTML=`<p class="eyebrow">오늘의 문제</p><h3>${quiz.q}</h3><div class="quiz-options">${quiz.options.map((o,i)=>`<button data-quiz="${i}">${i+1}. ${o}</button>`).join('')}</div><div id="quizAnswer"></div>`;quizBox.onclick=e=>{if(e.target.dataset.quiz!==undefined){const ok=Number(e.target.dataset.quiz)===quiz.answer;quizAnswer.innerHTML=`<div class="quiz-answer"><b>${ok?'정답입니다!':'아쉬워요!'}</b><br>${quiz.explain}</div>`;}}}
+randomFactBtn.onclick=()=>{const s=stories[Math.floor(Math.random()*stories.length)];modalContent.innerHTML=`<p class="eyebrow">RANDOM STORY</p><h2 class="detail-title">${s[0]}</h2><div class="detail-block"><p>${s[1]}</p></div>`;modal.classList.add('open');};
+renderMenu();renderStories();renderQuiz();

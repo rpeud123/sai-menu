@@ -1,0 +1,9 @@
+{
+  "name":"SAI 한 잔 이야기",
+  "short_name":"SAI",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#120f0e",
+  "theme_color":"#16110f",
+  "lang":"ko-KR"
+}
