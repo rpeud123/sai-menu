@@ -1,15 +1,27 @@
-SAI Web App v3 prototype
+SAI Web App v4 Prototype
 
-Included:
-- Full mobile UI renewal
-- Menu and drink detail pages
-- Owner-curated SAI Taste Select
-- Customer one-line reviews UI
-- "한 잔의 바통" order -> previous message -> required next-visit message flow
-- SAI feedback/memory page with copy and external review links
-- Whisky library
-- Food category removed
+포함 기능
+- 3.6초 SAI 스플래시 애니메이션
+- 홈 메뉴 재정렬
+- 메뉴 둘러보기 / 오늘의 추천 / 머문 사람들의 이야기 / 진행 중인 이벤트 / 사이 스토리
+- 14석 기준 오늘의 분위기
+- 6명 이상일 때만 분위기 카드 노출
+- 상세 화면 마지막에 잔여 좌석 표시
+- 만석 상태 적극 노출
+- 빈자리 알림 신청 및 브라우저 알림 프로토타입
+- 관리자 인원 조절과 만석→빈자리 테스트
+- 운영시간 21:00~06:00
+- 최신 메뉴 카테고리와 가격 반영
+- 관리자 메뉴 추가/수정/숨김/삭제/추천 표시
 
-Important:
-This version stores entries only in the customer's browser using localStorage.
-For real multi-customer operation, the next step is Supabase database + admin dashboard + real order/POS connection.
+테스트
+1. index.html을 브라우저에서 실행합니다.
+2. 우측 상단 원형 버튼을 눌러 현재 인원을 조절합니다.
+3. 0~5명에서는 오늘의 분위기가 숨겨집니다.
+4. 6~13명에서는 잔여 좌석이 표시됩니다.
+5. 14명에서는 만석과 빈자리 알림 버튼이 나타납니다.
+6. 관리자 화면의 '만석 후 빈자리 발생 테스트'로 알림 흐름을 확인합니다.
+
+주의
+현재 버전은 localStorage와 브라우저 Notification API 기반 프로토타입입니다.
+실제 여러 고객에게 푸시를 보내려면 Supabase + Web Push/FCM + 서비스 워커 연동이 필요합니다.

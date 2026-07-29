@@ -1,1 +1,9 @@
-{"name":"SAI · 한 잔보다 오래 남는 기억","short_name":"SAI","start_url":"./","display":"standalone","background_color":"#100d0c","theme_color":"#100d0c","lang":"ko"}
+{
+  "name": "SAI · 한 잔보다 오래 남는 기억",
+  "short_name": "SAI",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d0a09",
+  "theme_color": "#0d0a09",
+  "lang": "ko"
+}
