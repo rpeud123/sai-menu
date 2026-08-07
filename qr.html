@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SAI 테이블 QR</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .qr-status{margin:14px 0 0;font-size:14px;opacity:.75}
+    .qr-card img{width:180px;height:180px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:12px}
+    .qr-open{display:inline-flex;margin-top:10px;text-decoration:none}
+    .qr-url{word-break:break-all}
+  </style>
+</head>
+<body class="qr-body">
+<header class="qr-head">
+  <div><div class="neon-logo mini-word">사이</div><strong>테이블 QR 만들기</strong></div>
+  <button class="btn primary" onclick="window.print()">인쇄하기</button>
+</header>
+
+<main class="qr-main">
+  <div class="qr-setup card full">
+    <label>배포 사이트 주소</label>
+    <input id="siteUrl" value="https://sai-web-gilt.vercel.app" readonly>
+    <label>좌석 수</label>
+    <input id="seatCount" type="number" min="1" max="14" value="14">
+    <button id="makeQr" type="button" class="btn primary">QR 생성</button>
+    <p id="qrStatus" class="qr-status">1~14번 자리 QR을 생성할 수 있습니다.</p>
+  </div>
+  <div id="qrGrid" class="qr-grid"></div>
+</main>
+
+<script>
+(function(){
+  const siteUrl = document.getElementById('siteUrl');
+  const seatCount = document.getElementById('seatCount');
+  const makeQr = document.getElementById('makeQr');
+  const grid = document.getElementById('qrGrid');
+  const status = document.getElementById('qrStatus');
+
+  function buildQrCards(){
+    const n = Math.max(1, Math.min(14, parseInt(seatCount.value || '14', 10)));
+    seatCount.value = n;
+    grid.innerHTML = '';
+
+    for(let i=1; i<=n; i++){
+      const orderUrl = siteUrl.value.replace(/\/$/, '') + '/?table=' + i;
+      const card = document.createElement('article');
+      card.className = 'qr-card';
+      card.innerHTML = `
+        <div class="neon-logo qr-logo">사이</div>
+        <h2>${i}번 자리</h2>
+        <img src="qr-codes/table-${i}.png" alt="${i}번 자리 QR">
+        <p>QR을 찍고 바로 주문하세요.</p>
+        <small class="qr-url">${orderUrl}</small><br>
+        <a class="btn qr-open" href="${orderUrl}">이 자리로 테스트 열기</a>
+      `;
+      grid.appendChild(card);
+    }
+    status.textContent = n + '개 자리 QR 생성 완료';
+    grid.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  makeQr.addEventListener('click', buildQrCards);
+})();
+</script>
+</body>
+</html>

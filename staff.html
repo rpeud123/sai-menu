@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SAI 직원 주문판</title><link rel="stylesheet" href="style.css">
+</head><body class="staff-body">
+<header class="staff-header"><div><div class="neon-logo mini-word">사이</div><span>직원 주문판</span></div><div class="staff-header-actions"><span id="connectionState" class="connection-state">연결 확인 중</span><button id="soundTest" class="btn">알림음 테스트</button><button id="staffLogout" class="btn hidden">로그아웃</button></div></header>
+<main class="staff-main">
+<section id="staffLogin" class="staff-login card full">
+ <div class="eyebrow">STAFF LOGIN</div><h1>직원 주문판 로그인</h1>
+ <p class="muted">등록된 직원 이메일로 로그인 링크를 받아주세요.</p>
+ <input id="staffEmail" type="email" placeholder="직원 이메일">
+ <button id="staffLoginBtn" class="btn primary full-button">로그인 링크 받기</button>
+ <div id="staffLoginHelp" class="notice">Supabase 연결 전에는 같은 기기의 테스트 주문만 확인할 수 있습니다.</div>
+</section>
+<section id="staffBoard" class="hidden">
+ <div class="staff-summary">
+  <div><small>신규</small><strong id="countNew">0</strong></div>
+  <div><small>제조 중</small><strong id="countMaking">0</strong></div>
+  <div><small>준비 완료</small><strong id="countReady">0</strong></div>
+  <button id="refreshOrders" class="btn">새로고침</button>
+ </div>
+ <div class="staff-columns">
+  <section><h2>신규 주문</h2><div id="ordersNew" class="staff-order-list"></div></section>
+  <section><h2>제조 중</h2><div id="ordersMaking" class="staff-order-list"></div></section>
+  <section><h2>완료·제공</h2><div id="ordersDone" class="staff-order-list"></div></section>
+ </div>
+</section>
+</main>
+<div id="newOrderFlash" class="new-order-flash hidden"><strong>새 주문!</strong><span id="newOrderFlashText"></span></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="staff.js"></script>
+</body></html>

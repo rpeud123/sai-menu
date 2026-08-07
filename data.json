@@ -1,0 +1,1227 @@
+{
+  "version": "2.6",
+  "signatures": [
+    {
+      "id": "your-sai",
+      "name": "당신의 사이",
+      "price": 12000,
+      "abv": "직접 설정",
+      "category": "시그니처",
+      "copy": "오늘은 당신이 바텐더가 되어, 세상에 하나뿐인 한 잔을 완성합니다.",
+      "recipe": "기본 기주 2oz + 리큐르 2oz + 기본 음료 포함. 프리미엄 기주와 기주 2oz 초과분만 추가금.",
+      "score": 98,
+      "cost": 0,
+      "tags": [
+        "직접 설계",
+        "AI 사장 총평",
+        "밸런스 점수"
+      ],
+      "minPrice": 12000
+    },
+    {
+      "id": "sig-night",
+      "name": "사이, 그 밤",
+      "price": 14000,
+      "abv": "10~11%",
+      "category": "시그니처",
+      "copy": "당신의 밤을 이 잔에 담았습니다.",
+      "recipe": "확정 레시피 입력 예정",
+      "score": 92,
+      "cost": 0,
+      "tags": [
+        "달콤",
+        "상큼",
+        "시트러스"
+      ]
+    },
+    {
+      "id": "sig-temp",
+      "name": "사이의 온도",
+      "price": 14000,
+      "abv": "30~31도",
+      "category": "시그니처",
+      "copy": "오늘 하루가 힘들었다면, 이 한 잔이 조금은 따뜻한 위로가 되길",
+      "recipe": "관리자 화면에서 정확한 레시피 입력",
+      "score": 91,
+      "cost": 0,
+      "tags": [
+        "위로",
+        "고도수",
+        "천천히"
+      ]
+    },
+    {
+      "id": "sig-day",
+      "name": "그날 우리 사이",
+      "price": 13000,
+      "abv": "10~13%",
+      "category": "시그니처",
+      "copy": "그날 우리는 아무사이도 아니였지만..",
+      "recipe": "자몽 0.5oz / 피치트리 1oz / 탄산수 0.5oz / 레몬 0.2oz",
+      "score": 89,
+      "cost": 0,
+      "tags": [
+        "시트러스",
+        "과일",
+        "청량"
+      ]
+    },
+    {
+      "id": "sig-start",
+      "name": "사이의 시작",
+      "price": 14000,
+      "abv": "취향에 따라",
+      "category": "시그니처",
+      "copy": "원하시는 입맛대로 즉석에서 주조해드립니다.",
+      "recipe": "관리자 화면에서 정확한 레시피 입력",
+      "score": 90,
+      "cost": 0,
+      "tags": [
+        "사장님 추천",
+        "첫인상",
+        "커스텀"
+      ]
+    },
+    {
+      "id": "sig-end",
+      "name": "사이의 끝",
+      "price": 13000,
+      "abv": "14~16%",
+      "category": "시그니처",
+      "copy": "매번 끝이 어려운 것처럼, 끝까지 여운을 남기는 향이 특징.",
+      "recipe": "앙고스투라 대체 재료 확정 후 입력",
+      "score": 87,
+      "cost": 0,
+      "tags": [
+        "씁쓸",
+        "시트러스",
+        "새콤"
+      ]
+    },
+    {
+      "id": "sig-60",
+      "name": "사이 60",
+      "price": 15000,
+      "abv": "60%",
+      "category": "시그니처",
+      "copy": "절대 완성할 수 없는 메뉴. 이유는 완성할 때쯤 기억을 잃거든요..",
+      "recipe": "론디아즈 오버프루프 럼 기반 / 세부 레시피 관리자 입력",
+      "score": 94,
+      "cost": 0,
+      "tags": [
+        "묵직",
+        "상큼",
+        "과일"
+      ]
+    },
+    {
+      "id": "sig-tea",
+      "name": "사이 아이스티",
+      "price": 12000,
+      "abv": "검도 유도 합기도",
+      "category": "논알콜",
+      "copy": "흠… 스벅보단 맛나요. 네..",
+      "recipe": "자몽시럽 0.5oz / 레몬 1oz 기반",
+      "score": 88,
+      "cost": 0,
+      "tags": [
+        "달콤",
+        "베리",
+        "청량"
+      ]
+    }
+  ],
+  "menu": [
+    {
+      "id": "c1",
+      "name": "롱아일랜드 아이스티",
+      "category": "칵테일",
+      "price": 13000,
+      "abv": "12~14도",
+      "copy": "여러 베이스가 어우러진 익숙하고 강한 클래식.",
+      "score": 82,
+      "cost": 0,
+      "tags": [
+        "강함",
+        "클래식"
+      ]
+    },
+    {
+      "id": "c2",
+      "name": "준벅",
+      "category": "칵테일",
+      "price": 14000,
+      "abv": "중간",
+      "copy": "열대과일과 멜론의 달콤함이 선명한 인기 칵테일.",
+      "score": 90,
+      "cost": 0,
+      "tags": [
+        "달콤",
+        "열대과일"
+      ]
+    },
+    {
+      "id": "c3",
+      "name": "봄베이 진토닉",
+      "category": "칵테일",
+      "price": 13000,
+      "abv": "중간",
+      "copy": "주니퍼 향이 또렷한 사이의 추천 진토닉.",
+      "score": 89,
+      "cost": 0,
+      "tags": [
+        "드라이",
+        "향"
+      ]
+    },
+    {
+      "id": "c4",
+      "name": "블랙 러시안",
+      "category": "칵테일",
+      "price": 14000,
+      "abv": "28~30도",
+      "copy": "커피의 달콤쌉쌀함과 보드카의 힘이 만나는 짧고 진한 잔.",
+      "score": 86,
+      "cost": 0,
+      "tags": [
+        "커피",
+        "고도수"
+      ]
+    },
+    {
+      "id": "c5",
+      "name": "깔루아 밀크",
+      "category": "칵테일",
+      "price": 13000,
+      "abv": "가벼움",
+      "copy": "부드럽고 달콤해 입문자에게 추천하는 디저트 칵테일.",
+      "score": 92,
+      "cost": 0,
+      "tags": [
+        "달콤",
+        "입문"
+      ]
+    },
+    {
+      "id": "h1",
+      "name": "사이 톡톡",
+      "category": "하이볼",
+      "price": 13000,
+      "abv": "6~8도",
+      "copy": "위스키와 원하는 음료를 조합하는 커스텀 하이볼.",
+      "score": 88,
+      "cost": 0,
+      "tags": [
+        "커스텀",
+        "청량"
+      ]
+    },
+    {
+      "id": "h2",
+      "name": "피치 하이볼",
+      "category": "하이볼",
+      "price": 13000,
+      "abv": "6~8도",
+      "copy": "복숭아 향이 부드럽게 이어지는 가벼운 하이볼.",
+      "score": 84,
+      "cost": 0,
+      "tags": [
+        "복숭아",
+        "가벼움"
+      ]
+    },
+    {
+      "id": "n1",
+      "name": "셜리 템플",
+      "category": "논알콜",
+      "price": 13000,
+      "abv": "논알콜",
+      "copy": "달콤하고 화사한 클래식 논알콜 칵테일.",
+      "score": 80,
+      "cost": 0,
+      "tags": [
+        "논알콜",
+        "달콤"
+      ]
+    },
+    {
+      "id": "t1",
+      "name": "데킬라 샷",
+      "category": "데킬라·꼬냑",
+      "price": 5000,
+      "abv": "",
+      "copy": "짧고 선명하게 분위기를 올리는 한 잔.",
+      "score": 76,
+      "cost": 0,
+      "tags": [
+        "샷",
+        "게임"
+      ]
+    },
+    {
+      "id": "b1",
+      "name": "기네스",
+      "category": "맥주",
+      "price": 11000,
+      "abv": "",
+      "copy": "부드러운 거품과 로스티드 풍미가 편안한 스타우트.",
+      "score": 84,
+      "cost": 0,
+      "tags": [
+        "맥주",
+        "스타우트"
+      ]
+    },
+    {
+      "id": "f1",
+      "name": "팝콘 리필",
+      "category": "푸드",
+      "price": 1000,
+      "abv": "",
+      "copy": "가볍게 곁들이는 기본 안주.",
+      "score": 70,
+      "cost": 0,
+      "tags": [
+        "스낵"
+      ]
+    },
+    {
+      "id": "f2",
+      "name": "나쵸",
+      "category": "푸드",
+      "price": 5000,
+      "abv": "",
+      "copy": "칵테일과 편하게 곁들이는 바 스낵.",
+      "score": 78,
+      "cost": 0,
+      "tags": [
+        "스낵"
+      ]
+    },
+    {
+      "id": "w24_0",
+      "name": "라프로익 10Y",
+      "category": "피트",
+      "price": 14000,
+      "bottlePrice": 219000,
+      "abv": "",
+      "copy": "Bottle 219,000원",
+      "tags": [
+        "피트",
+        "스모키",
+        "바다"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_1",
+      "name": "아드벡 10Y",
+      "category": "피트",
+      "price": 14000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "피트",
+        "스모키",
+        "강렬"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_2",
+      "name": "라가불린 8Y",
+      "category": "피트",
+      "price": 15000,
+      "bottlePrice": 249000,
+      "abv": "",
+      "copy": "Bottle 249,000원",
+      "tags": [
+        "피트",
+        "후추",
+        "스모키"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_3",
+      "name": "탈리스커 10Y",
+      "category": "피트",
+      "price": 15000,
+      "bottlePrice": null,
+      "abv": "",
+      "copy": "재고·바틀 문의",
+      "tags": [
+        "바다",
+        "후추",
+        "스모키"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_4",
+      "name": "글렌피딕 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "배",
+        "꿀",
+        "산뜻"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_5",
+      "name": "발베니 더블우드 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "꿀",
+        "바닐라",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_6",
+      "name": "맥캘란 더블캐스크 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "건과일",
+        "바닐라",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_7",
+      "name": "달모어 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 279000,
+      "abv": "",
+      "copy": "Bottle 279,000원",
+      "tags": [
+        "오렌지",
+        "초콜릿",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_8",
+      "name": "아란 10Y",
+      "category": "스카치 싱글몰트",
+      "price": 14000,
+      "bottlePrice": 219000,
+      "abv": "",
+      "copy": "Bottle 219,000원",
+      "tags": [
+        "시트러스",
+        "사과",
+        "몰트"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_9",
+      "name": "글렌모렌지 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 14000,
+      "bottlePrice": 219000,
+      "abv": "",
+      "copy": "Bottle 219,000원",
+      "tags": [
+        "오렌지",
+        "바닐라",
+        "꽃향"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_10",
+      "name": "글렌알라키 12Y",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "건과일",
+        "꿀",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_11",
+      "name": "글렌그란트 15Y",
+      "category": "스카치 싱글몰트",
+      "price": 20000,
+      "bottlePrice": 370000,
+      "abv": "",
+      "copy": "Bottle 370,000원",
+      "tags": [
+        "과일",
+        "견과",
+        "바닐라"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_12",
+      "name": "카발란 디스틸러리 셀렉트",
+      "category": "스카치 싱글몰트",
+      "price": 15000,
+      "bottlePrice": 289000,
+      "abv": "",
+      "copy": "Bottle 289,000원",
+      "tags": [
+        "열대과일",
+        "바닐라",
+        "부드러움"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_13",
+      "name": "맥캘란 셰리 오크 12Y",
+      "category": "셰리",
+      "price": 17000,
+      "bottlePrice": 319000,
+      "abv": "",
+      "copy": "Bottle 319,000원",
+      "tags": [
+        "건과일",
+        "초콜릿",
+        "셰리"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_14",
+      "name": "글렌드로낙 12Y",
+      "category": "셰리",
+      "price": 15000,
+      "bottlePrice": 249000,
+      "abv": "",
+      "copy": "Bottle 249,000원",
+      "tags": [
+        "건포도",
+        "초콜릿",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_15",
+      "name": "글렌알라키 15Y",
+      "category": "셰리",
+      "price": 20000,
+      "bottlePrice": 389000,
+      "abv": "",
+      "copy": "Bottle 389,000원",
+      "tags": [
+        "건과일",
+        "계피",
+        "진한 셰리"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_16",
+      "name": "몽키숄더",
+      "category": "스카치 블렌디드",
+      "price": 14000,
+      "bottlePrice": 169000,
+      "abv": "",
+      "copy": "Bottle 169,000원",
+      "tags": [
+        "몰트",
+        "바닐라",
+        "부드러움"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_17",
+      "name": "조니워커 블랙",
+      "category": "스카치 블렌디드",
+      "price": 13000,
+      "bottlePrice": 159000,
+      "abv": "",
+      "copy": "Bottle 159,000원",
+      "tags": [
+        "스모키",
+        "바닐라",
+        "과일"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_18",
+      "name": "조니워커 그린",
+      "category": "스카치 블렌디드",
+      "price": 16000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "허브",
+        "오크",
+        "스모키"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_19",
+      "name": "와일드터키 101",
+      "category": "버번",
+      "price": 14000,
+      "bottlePrice": 169000,
+      "abv": "",
+      "copy": "Bottle 169,000원",
+      "tags": [
+        "바닐라",
+        "캐러멜",
+        "스파이스"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_20",
+      "name": "잭다니엘",
+      "category": "버번",
+      "price": 13000,
+      "bottlePrice": 159000,
+      "abv": "",
+      "copy": "Bottle 159,000원",
+      "tags": [
+        "바닐라",
+        "바나나",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_21",
+      "name": "버팔로 트레이스",
+      "category": "버번",
+      "price": 13000,
+      "bottlePrice": 159000,
+      "abv": "",
+      "copy": "Bottle 159,000원",
+      "tags": [
+        "캐러멜",
+        "바닐라",
+        "체리"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_22",
+      "name": "메이커스 마크",
+      "category": "버번",
+      "price": 14000,
+      "bottlePrice": 219000,
+      "abv": "",
+      "copy": "Bottle 219,000원",
+      "tags": [
+        "바닐라",
+        "캐러멜",
+        "부드러움"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_23",
+      "name": "제임슨",
+      "category": "아이리시",
+      "price": 13000,
+      "bottlePrice": 159000,
+      "abv": "",
+      "copy": "Bottle 159,000원",
+      "tags": [
+        "곡물",
+        "바닐라",
+        "부드러움"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_24",
+      "name": "히비키 하모니",
+      "category": "재패니즈",
+      "price": 20000,
+      "bottlePrice": 330000,
+      "abv": "",
+      "copy": "Bottle 330,000원",
+      "tags": [
+        "꽃향",
+        "꿀",
+        "시트러스"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_25",
+      "name": "야마자키",
+      "category": "재패니즈",
+      "price": 33000,
+      "bottlePrice": null,
+      "abv": "",
+      "copy": "재고·바틀 문의",
+      "tags": [
+        "과일",
+        "오크",
+        "향긋함"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_26",
+      "name": "818 레포사도",
+      "category": "데킬라",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "바닐라",
+        "아가베",
+        "오크"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_27",
+      "name": "페트론 실버",
+      "category": "데킬라",
+      "price": 15000,
+      "bottlePrice": 269000,
+      "abv": "",
+      "copy": "Bottle 269,000원",
+      "tags": [
+        "아가베",
+        "시트러스",
+        "깔끔"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_28",
+      "name": "호세 쿠엘보",
+      "category": "데킬라",
+      "price": 7000,
+      "bottlePrice": 159000,
+      "abv": "",
+      "copy": "Bottle 159,000원",
+      "tags": [
+        "아가베",
+        "시트러스",
+        "후추"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_29",
+      "name": "데킬라 샷",
+      "category": "데킬라",
+      "price": 5000,
+      "bottlePrice": null,
+      "abv": "",
+      "copy": "재고·바틀 문의",
+      "tags": [
+        "샷"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_30",
+      "name": "사이 내기 데킬라 (5잔)",
+      "category": "데킬라",
+      "price": 15000,
+      "bottlePrice": null,
+      "abv": "",
+      "copy": "재고·바틀 문의",
+      "tags": [
+        "게임",
+        "5잔"
+      ],
+      "score": 88
+    },
+    {
+      "id": "w24_31",
+      "name": "레미마틴 VSOP",
+      "category": "브랜디·꼬냑",
+      "price": 15000,
+      "bottlePrice": 279000,
+      "abv": "",
+      "copy": "Bottle 279,000원",
+      "tags": [
+        "건과일",
+        "바닐라",
+        "오크"
+      ],
+      "score": 88
+    }
+  ],
+  "memories": [
+    {
+      "id": "m1",
+      "image": "memory-1.jpg",
+      "author": "사이",
+      "text": "혼자 와도 어느새 같은 테이블의 이야기가 되는 밤.",
+      "date": "2026-07-30",
+      "likes": 31,
+      "comments": [
+        "다음에도 이 자리에서 만나요."
+      ],
+      "tags": [
+        "대화",
+        "첫방문"
+      ],
+      "pick": true
+    },
+    {
+      "id": "m2",
+      "image": "memory-5.jpg",
+      "author": "사이",
+      "text": "조명 아래에서 시간이 조금 천천히 흘렀던 날.",
+      "date": "2026-07-29",
+      "likes": 24,
+      "comments": [],
+      "tags": [
+        "조명",
+        "새벽"
+      ],
+      "pick": false
+    },
+    {
+      "id": "m3",
+      "image": "memory-7.jpg",
+      "author": "손님의 기록",
+      "text": "오늘의 얼굴을 그림으로 남겨주신 밤.",
+      "date": "2026-07-28",
+      "likes": 42,
+      "comments": [
+        "그림 너무 귀여워요!"
+      ],
+      "tags": [
+        "그림",
+        "추억"
+      ],
+      "pick": true
+    },
+    {
+      "id": "m4",
+      "image": "memory-6.jpg",
+      "author": "사이",
+      "text": "한 잔보다 오래 남은 대화.",
+      "date": "2026-07-27",
+      "likes": 18,
+      "comments": [],
+      "tags": [
+        "위스키",
+        "대화"
+      ],
+      "pick": false
+    }
+  ],
+  "recipes": [
+    {
+      "id": "r1",
+      "name": "새벽 사이",
+      "creator": "민지",
+      "base": "보드카",
+      "taste": "상큼",
+      "mood": "새벽",
+      "note": "가볍게 시작해 오래 이야기하고 싶은 맛",
+      "likes": 28,
+      "uses": 17,
+      "month": "2026-07"
+    },
+    {
+      "id": "r2",
+      "name": "오늘의 위로",
+      "creator": "익명의 손님",
+      "base": "위스키",
+      "taste": "달콤쌉쌀",
+      "mood": "위로",
+      "note": "힘든 하루를 천천히 내려놓는 한 잔",
+      "likes": 35,
+      "uses": 22,
+      "month": "2026-07"
+    }
+  ],
+  "messages": {
+    "sig-night": [
+      "오늘은 말보다 조용한 시간이 필요했어요."
+    ],
+    "sig-temp": [
+      "이 잔을 마신 다음 사람의 하루는 조금 덜 힘들었으면."
+    ],
+    "sig-start": [
+      "처음 왔는데, 생각보다 금방 편해졌어요."
+    ],
+    "sig-60": [
+      "다음 사람도 천천히 마시길. 진짜 세요."
+    ],
+    "c2": [
+      "달콤한 걸 골랐는데 오늘 대화도 달콤했어요."
+    ]
+  },
+  "userMemories": [
+    "처음 혼자 왔던 날, 생각보다 오래 머물렀다.",
+    "그날은 낯선 사람과 가장 오래 이야기했다."
+  ],
+  "customBuilder": {
+    "minimumPrice": 12000,
+    "ozOptions": [
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "bases": [
+      {
+        "name": "보드카",
+        "family": "보드카",
+        "abv": 40,
+        "costPerOz": 800,
+        "baseCostPerOz": 800,
+        "premiumStep": 0,
+        "color": "투명"
+      },
+      {
+        "name": "화이트럼",
+        "family": "럼",
+        "abv": 40,
+        "costPerOz": 800,
+        "baseCostPerOz": 800,
+        "premiumStep": 0,
+        "color": "투명"
+      },
+      {
+        "name": "일반 럼",
+        "family": "럼",
+        "abv": 40,
+        "costPerOz": 900,
+        "baseCostPerOz": 900,
+        "premiumStep": 0,
+        "color": "호박색"
+      },
+      {
+        "name": "론디아즈151",
+        "family": "럼",
+        "abv": 75.5,
+        "costPerOz": 1050,
+        "baseCostPerOz": 800,
+        "premiumStep": 250,
+        "color": "호박색"
+      },
+      {
+        "name": "진",
+        "family": "진",
+        "abv": 40,
+        "costPerOz": 900,
+        "baseCostPerOz": 900,
+        "premiumStep": 0,
+        "color": "투명"
+      },
+      {
+        "name": "봄베이 진",
+        "family": "진",
+        "abv": 47,
+        "costPerOz": 1050,
+        "baseCostPerOz": 900,
+        "premiumStep": 150,
+        "color": "투명"
+      },
+      {
+        "name": "핸드릭스 진",
+        "family": "진",
+        "abv": 44,
+        "costPerOz": 1450,
+        "baseCostPerOz": 900,
+        "premiumStep": 550,
+        "color": "투명"
+      },
+      {
+        "name": "듀랑고 골드",
+        "family": "데킬라",
+        "abv": 40,
+        "costPerOz": 800,
+        "baseCostPerOz": 800,
+        "premiumStep": 0,
+        "color": "금빛"
+      },
+      {
+        "name": "호세 쿠엘보",
+        "family": "데킬라",
+        "abv": 38,
+        "costPerOz": 950,
+        "baseCostPerOz": 800,
+        "premiumStep": 150,
+        "color": "금빛"
+      }
+    ],
+    "liqueurs": [
+      {
+        "name": "트리플섹",
+        "abv": 30,
+        "costPerOz": 500,
+        "taste": "시트러스",
+        "color": "투명"
+      },
+      {
+        "name": "피치트리",
+        "abv": 20,
+        "costPerOz": 550,
+        "taste": "복숭아",
+        "color": "투명"
+      },
+      {
+        "name": "카시스",
+        "abv": 16,
+        "costPerOz": 650,
+        "taste": "베리",
+        "color": "자주색"
+      },
+      {
+        "name": "블루큐라소",
+        "abv": 21,
+        "costPerOz": 550,
+        "taste": "오렌지",
+        "color": "파란색"
+      },
+      {
+        "name": "애플퍼커",
+        "abv": 15,
+        "costPerOz": 550,
+        "taste": "사과",
+        "color": "초록색"
+      },
+      {
+        "name": "멜론",
+        "abv": 20,
+        "costPerOz": 550,
+        "taste": "멜론",
+        "color": "초록색"
+      },
+      {
+        "name": "말리부",
+        "abv": 21,
+        "costPerOz": 600,
+        "taste": "코코넛",
+        "color": "투명"
+      },
+      {
+        "name": "깔루아",
+        "abv": 20,
+        "costPerOz": 600,
+        "taste": "커피",
+        "color": "갈색"
+      },
+      {
+        "name": "베일리스",
+        "abv": 17,
+        "costPerOz": 700,
+        "taste": "크리미",
+        "color": "크림색"
+      },
+      {
+        "name": "아마레또",
+        "abv": 28,
+        "costPerOz": 700,
+        "taste": "아몬드",
+        "color": "호박색"
+      },
+      {
+        "name": "크렘 드 카카오",
+        "abv": 24,
+        "costPerOz": 650,
+        "taste": "초콜릿",
+        "color": "갈색"
+      },
+      {
+        "name": "디카이퍼",
+        "abv": 20,
+        "costPerOz": 600,
+        "taste": "과일",
+        "color": "투명"
+      },
+      {
+        "name": "레몬주스",
+        "abv": 0,
+        "costPerOz": 250,
+        "taste": "새콤",
+        "color": "노란색"
+      },
+      {
+        "name": "라임주스",
+        "abv": 0,
+        "costPerOz": 300,
+        "taste": "상큼",
+        "color": "연두색"
+      }
+    ],
+    "mixers": [
+      "탄산수",
+      "토닉",
+      "콜라",
+      "사이다",
+      "진저에일",
+      "우유",
+      "오렌지주스",
+      "파인애플주스",
+      "크랜베리주스",
+      "자몽주스"
+    ],
+    "flavors": [
+      "달콤",
+      "새콤",
+      "상큼",
+      "청량",
+      "과일",
+      "시트러스",
+      "묵직",
+      "스모키",
+      "쌉쌀",
+      "고소",
+      "크리미",
+      "허브",
+      "꽃향",
+      "바닐라",
+      "초콜릿"
+    ],
+    "aromas": [
+      "과일향",
+      "오크향",
+      "바닐라",
+      "캐러멜",
+      "피트",
+      "꽃향",
+      "허브",
+      "민트",
+      "계피"
+    ],
+    "glasses": [
+      {
+        "name": "하이볼",
+        "capacity": 300
+      },
+      {
+        "name": "롱드링크",
+        "capacity": 360
+      },
+      {
+        "name": "온더락",
+        "capacity": 200
+      },
+      {
+        "name": "마티니",
+        "capacity": 150
+      },
+      {
+        "name": "쿠페",
+        "capacity": 170
+      },
+      {
+        "name": "샴페인",
+        "capacity": 180
+      },
+      {
+        "name": "글렌캐런",
+        "capacity": 120
+      }
+    ],
+    "ices": [
+      {
+        "name": "없음",
+        "dilution": 0,
+        "space": 0
+      },
+      {
+        "name": "큰 얼음",
+        "dilution": 0.12,
+        "space": 70
+      },
+      {
+        "name": "작은 얼음",
+        "dilution": 0.18,
+        "space": 90
+      },
+      {
+        "name": "크러쉬",
+        "dilution": 0.25,
+        "space": 120
+      }
+    ],
+    "garnishes": [
+      "레몬",
+      "라임",
+      "오렌지",
+      "체리",
+      "로즈마리",
+      "민트",
+      "시나몬",
+      "없음"
+    ]
+  },
+  "community": [
+    {
+      "id": "c1",
+      "category": "좋았던 점",
+      "title": "새벽 분위기가 정말 좋았어요",
+      "content": "혼자 방문했는데 자연스럽게 대화할 수 있어서 편했습니다.",
+      "author": "익명의 손님",
+      "date": "2026-07-30",
+      "likes": 12,
+      "views": 31,
+      "comments": [
+        "다음에 또 만나요!"
+      ],
+      "ownerReply": "좋은 기억 남겨주셔서 감사합니다.",
+      "status": "SAI 답변"
+    },
+    {
+      "id": "c2",
+      "category": "추가됐으면 하는 위스키",
+      "title": "히비키 블렌더스 초이스도 궁금해요",
+      "content": "입고 가능하면 한 번 마셔보고 싶어요.",
+      "author": "새벽손님",
+      "date": "2026-07-29",
+      "likes": 8,
+      "views": 22,
+      "comments": [],
+      "ownerReply": "가격과 수급 상황을 확인해볼게요.",
+      "status": "검토 중"
+    },
+    {
+      "id": "c3",
+      "category": "개선 제안",
+      "title": "가방 바구니가 있으면 좋겠어요",
+      "content": "좌석 아래 작은 바구니가 있으면 더 편할 것 같습니다.",
+      "author": "익명",
+      "date": "2026-07-28",
+      "likes": 19,
+      "views": 40,
+      "comments": [
+        "공감해요"
+      ],
+      "ownerReply": "좌석별 바구니를 준비했습니다.",
+      "status": "반영 완료"
+    }
+  ]
+}
