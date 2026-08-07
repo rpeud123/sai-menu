@@ -4,11 +4,11 @@
     {
       "id": "your-sai",
       "name": "당신의 사이",
-      "price": 12000,
+      "price": 13000,
       "abv": "직접 설정",
       "category": "시그니처",
-      "copy": "오늘은 당신이 바텐더가 되어, 세상에 하나뿐인 한 잔을 완성합니다.",
-      "recipe": "기본 기주 2oz + 리큐르 2oz + 기본 음료 포함. 프리미엄 기주와 기주 2oz 초과분만 추가금.",
+      "copy": "이 세상에서 나를 가장 잘 아는 건 바로 나 아닐까요? 나를 위한 술을 직접 완성해주세요.",
+      "recipe": "기주 총 2oz + 리큐르 총 2oz + 원하는 음료까지 13,000원. 포함량을 넘겨 0.5oz씩 추가할 때 추가요금이 붙습니다.",
       "score": 98,
       "cost": 0,
       "tags": [
@@ -16,7 +16,7 @@
         "AI 사장 총평",
         "밸런스 점수"
       ],
-      "minPrice": 12000
+      "minPrice": 13000
     },
     {
       "id": "sig-night",
@@ -886,7 +886,7 @@
     "그날은 낯선 사람과 가장 오래 이야기했다."
   ],
   "customBuilder": {
-    "minimumPrice": 12000,
+    "minimumPrice": 13000,
     "ozOptions": [
       0.5,
       1.0,
@@ -978,10 +978,10 @@
     ],
     "liqueurs": [
       {
-        "name": "트리플섹",
-        "abv": 30,
-        "costPerOz": 500,
-        "taste": "시트러스",
+        "name": "말리부",
+        "abv": 21,
+        "costPerOz": 600,
+        "taste": "코코넛",
         "color": "투명"
       },
       {
@@ -989,41 +989,6 @@
         "abv": 20,
         "costPerOz": 550,
         "taste": "복숭아",
-        "color": "투명"
-      },
-      {
-        "name": "카시스",
-        "abv": 16,
-        "costPerOz": 650,
-        "taste": "베리",
-        "color": "자주색"
-      },
-      {
-        "name": "블루큐라소",
-        "abv": 21,
-        "costPerOz": 550,
-        "taste": "오렌지",
-        "color": "파란색"
-      },
-      {
-        "name": "애플퍼커",
-        "abv": 15,
-        "costPerOz": 550,
-        "taste": "사과",
-        "color": "초록색"
-      },
-      {
-        "name": "멜론",
-        "abv": 20,
-        "costPerOz": 550,
-        "taste": "멜론",
-        "color": "초록색"
-      },
-      {
-        "name": "말리부",
-        "abv": 21,
-        "costPerOz": 600,
-        "taste": "코코넛",
         "color": "투명"
       },
       {
@@ -1041,6 +1006,41 @@
         "color": "크림색"
       },
       {
+        "name": "멜론퍼커",
+        "abv": 20,
+        "costPerOz": 550,
+        "taste": "멜론",
+        "color": "초록색"
+      },
+      {
+        "name": "애플퍼커",
+        "abv": 15,
+        "costPerOz": 550,
+        "taste": "사과",
+        "color": "초록색"
+      },
+      {
+        "name": "레몬샤워",
+        "abv": 15,
+        "costPerOz": 550,
+        "taste": "레몬",
+        "color": "노란색"
+      },
+      {
+        "name": "바나나디카이퍼",
+        "abv": 15,
+        "costPerOz": 550,
+        "taste": "바나나",
+        "color": "노란색"
+      },
+      {
+        "name": "트리플섹",
+        "abv": 30,
+        "costPerOz": 500,
+        "taste": "시트러스",
+        "color": "투명"
+      },
+      {
         "name": "아마레또",
         "abv": 28,
         "costPerOz": 700,
@@ -1048,45 +1048,48 @@
         "color": "호박색"
       },
       {
-        "name": "크렘 드 카카오",
+        "name": "카카오(화이트)",
+        "abv": 24,
+        "costPerOz": 650,
+        "taste": "초콜릿",
+        "color": "크림색"
+      },
+      {
+        "name": "카카오(브라운)",
         "abv": 24,
         "costPerOz": 650,
         "taste": "초콜릿",
         "color": "갈색"
       },
       {
-        "name": "디카이퍼",
-        "abv": 20,
+        "name": "디카이퍼민트",
+        "abv": 24,
         "costPerOz": 600,
-        "taste": "과일",
-        "color": "투명"
+        "taste": "민트",
+        "color": "초록색"
       },
       {
-        "name": "레몬주스",
-        "abv": 0,
-        "costPerOz": 250,
-        "taste": "새콤",
-        "color": "노란색"
+        "name": "디카이퍼카시스",
+        "abv": 16,
+        "costPerOz": 650,
+        "taste": "베리",
+        "color": "자주색"
       },
       {
-        "name": "라임주스",
-        "abv": 0,
-        "costPerOz": 300,
-        "taste": "상큼",
-        "color": "연두색"
+        "name": "디카이퍼블루큐라소",
+        "abv": 21,
+        "costPerOz": 550,
+        "taste": "오렌지",
+        "color": "파란색"
       }
     ],
     "mixers": [
-      "탄산수",
-      "토닉",
-      "콜라",
-      "사이다",
-      "진저에일",
-      "우유",
+      "토닉워터",
       "오렌지주스",
+      "콜라",
+      "탄산수",
       "파인애플주스",
-      "크랜베리주스",
-      "자몽주스"
+      "라임즙"
     ],
     "flavors": [
       "달콤",
@@ -1177,7 +1180,13 @@
       "민트",
       "시나몬",
       "없음"
-    ]
+    ],
+    "pricing": {
+      "baseIncludedOz": 2.0,
+      "liqueurIncludedOz": 2.0,
+      "baseExtraPerHalfOz": 1000,
+      "liqueurExtraPerHalfOz": 500
+    }
   },
   "community": [
     {

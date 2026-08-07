@@ -1,67 +1,93 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SAI 테이블 QR</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .qr-status{margin:14px 0 0;font-size:14px;opacity:.75}
-    .qr-card img{width:180px;height:180px;display:block;margin:10px auto;background:#fff;padding:8px;border-radius:12px}
-    .qr-open{display:inline-flex;margin-top:10px;text-decoration:none}
-    .qr-url{word-break:break-all}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>사이 테이블 QR 만들기</title>
+<style>
+:root{--bg:#efefef;--ink:#111;--gold:#e9ac45;--line:#2b241d;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif;color:var(--ink)}
+header{background:#101010;color:#fff;padding:28px 28px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:3}
+.brand{display:flex;gap:18px;align-items:center;font-weight:800;font-size:25px}
+.logo{font-size:42px;text-shadow:0 0 8px #fff7,0 0 22px #d6a85a}
+button,a.btn{border:0;border-radius:24px;background:var(--gold);padding:16px 24px;font-size:20px;font-weight:800;color:#111;text-decoration:none;display:inline-block}
+main{padding:24px}
+.panel{background:#fff;border:2px solid var(--line);border-radius:28px;padding:22px;margin-bottom:22px}
+label{display:block;font-size:17px;color:#9b8a77;margin:10px 0 8px}
+input{width:100%;padding:18px;border:2px solid #b9b9b9;border-radius:18px;font-size:19px;background:white}
+#siteUrl{color:#222}
+.status{margin:14px 0 0;font-size:15px;color:#6e6255}
+.grid{display:grid;grid-template-columns:1fr;gap:18px}
+.card{background:white;border:2px solid var(--line);border-radius:24px;padding:20px;text-align:center}
+.card h2{margin:4px 0 8px;font-size:28px}
+.card img{width:220px;height:220px;max-width:100%;display:block;margin:12px auto;background:white}
+.card small{display:block;word-break:break-all;color:#746858;margin:10px 0 14px}
+.test{font-size:17px;padding:13px 18px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media print{header,.panel{display:none} main{padding:0} .grid{grid-template-columns:repeat(2,1fr)} .test{display:none} body{background:white}}
+</style>
 </head>
-<body class="qr-body">
-<header class="qr-head">
-  <div><div class="neon-logo mini-word">사이</div><strong>테이블 QR 만들기</strong></div>
-  <button class="btn primary" onclick="window.print()">인쇄하기</button>
+<body>
+<header>
+  <div class="brand"><span class="logo">사이</span><span>테이블 QR 만들기</span></div>
+  <button onclick="window.print()">인쇄하기</button>
 </header>
-
-<main class="qr-main">
-  <div class="qr-setup card full">
+<main>
+  <section class="panel">
     <label>배포 사이트 주소</label>
     <input id="siteUrl" value="https://sai-web-gilt.vercel.app" readonly>
     <label>좌석 수</label>
     <input id="seatCount" type="number" min="1" max="14" value="14">
-    <button id="makeQr" type="button" class="btn primary">QR 생성</button>
-    <p id="qrStatus" class="qr-status">1~14번 자리 QR을 생성할 수 있습니다.</p>
-  </div>
-  <div id="qrGrid" class="qr-grid"></div>
+    <div style="margin-top:14px"><button id="makeQr" type="button">QR 생성</button></div>
+    <div id="status" class="status">V3.0 · 1~14번 자리 QR 생성 준비 완료</div>
+  </section>
+  <section id="grid" class="grid"></section>
 </main>
-
 <script>
 (function(){
+  const qrImages = {};
+      qrImages[1] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACkUlEQVR4nO2aTWrkMBCFvxoZemlDDpCjyDeYI83V7KP0AQLWMmDzZiHJaWcmzIS4nTaUFsY/3+JB8UqlKpv4zBp/fAoH55133nnnnXf+I97KaoBkZn1qYFwfzcysP1CP8zvzUZI0gfXrp6gZIEiStOXvrcf5nfm0OpQgaGeAJb8rxj5Uj/P78M37F2MX0NhNGO0kSMfqcf6+vIZ2xn5NQJyW1dPfpsf5r/HVv63IXo3XZhbpaWa0kP172wJ5NP3O/xc/mplZV+or6wHiBNaz5PL5WD3O78Rn/26alIuVd2mxYuzj9Di/L08+/JTzURAQpKGdKReCNFROw6Ppd/4fq8R3CoJWIk4A7YxU74iTx/fc/Pj8asSrWQnttYGxC6pB9v7GSXlum1PZq6HYOdYPGlrJ/XtKvuTdbFPe0jVIKkn6Zov2+J6Yz4ZN5SxkfWqwniDra0392Pqd/8sqeRfQADU/a64zh82Qwf17Nr7Gt52BttyV1JwDH8rByfPzGflaX7W6qarqu22QPb4n5NfiaV4HvqytDfLRt1w8vifky3xhtCAjdYjUYXFagPal0diF2cZnYcfocX5f/ubwUxxaN2HitNl6PT+fkV/n+0uj0YB4NRSvFzF22bQGqYM4HKHH+X15tF03Gy6sTSzvX52Vz/6t3YswixRmYG40/nwxSE8zpGY+SI/zd+HjTZNyMevTRcRrQ+lJ18L6YfU7/9HaZOUy660f1qi+nYQfTb/zn+TzJJjSfy41dbrI+u/R4/yX+D//j/35aoKlEQlyTQ2L6Rg9zt+Hb8uQIe+6o11kfVublEMeIh2px/l9+M18n1BHvxO87br4/Oi0/Pv/J5Ufyl+Tevf18fQ777zzzjvv/Bn539Sj+Nw66HxzAAAAAElFTkSuQmCC';
+      qrImages[2] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACg0lEQVR4nO2bQWrkMBBF3x8LspRvkKPIN5gjDXOk3MA6Sg4QsJcNNjULSe6QZEiHNB57KEE3cvstCkRVfX2pZXxl5B9fwsF555133nnnnf8brzoCUr9KwyxpmAMwt3fDjvE4fy8eMzMjmZnZ1JmZLUC0Okvlt4aMR4vf+dv4uWVo7sFsAkmhvLvOjhu/87fx+jV1JkkiTd37zdPR43f+Ez73YCMAcWmzfxiP89/iW+GNBswAc1hEnFAWkJ7gdRYfLX7nb+KzJKkH0gSk50Crz2uRz/vG4/yd+KKfr6NUZZsA4kIV1ttw/XxKXgOgYZZgfjANdGYjnV0TW8OO8Th/L770X2PuaU24l8FFpOewVGpu5flw8Tt/O58laYhm1boqlbr5G/vH4/z3+ZK/gq7mau6nMrGsblEaF0R8aTr7aPE7/8m4qqoimDensu5/m1Pp+uqU/Kv1tTFWm/m63HWlAfefT8lXfZWHAMxhsdyklOW+a7OhW7RPPM7fl699NdkalAyUbA2ksZpWSk+rSLa6v3FOfqvPVje86aqVY3vh/fe0fFvfsrR1Q0SawEY6e+tk+fqejL/6G6KYHFAOkYBt4zQ/mPffU/OtFmuIy/a4YGO8COLF++85+eZvxJcAc19cDcs/12DlpJCAiJPn7zn5Vp/bR8QJmAPAKtIISuNu8Th/X37TV8ArkVWu1rEdAnd+v+7UfHUlwX73nZX8zY8LTTp7/z053+5P6tdzQOqbK5klkbfHw8bv/McjvHm2/LhgpfU+Pfj9yf+OT9OqVp8vKjvh7Pevzsp/cH+yR2lcQnE10oSf/56Yf6efixPd7I7yldx/Pisv/3+3884777zzzu/O/wGPyZsTfxeG9AAAAABJRU5ErkJggg==';
+      qrImages[3] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAAClUlEQVR4nO2aQWrkMBBF3x8bemlDDtBHsW/W5GbWUXyAgdYyIFOzkOR0EmYmIW6nDaWF0pHf4oP4X+WyZHxlhF9fwsF555133nnnnf8brzJaCD150hilPEmSxh31OL8V3+Y/wwQQn4DYJoZZGBgQmwSA9tHj/H34WByqy3URdGbAUtakdm89zt+JD+eU45rQNx9fnh5ev/P/5oe5hcHMipN/Wo/z3+Jr8HYGRCCcDRF7CGoMYj6G99Lj/F34IEnqKf6FxhiuoJEll8/76nF+Iz7798ahoUdGXPJUjL2fHue35TEzy14FGjO7AnQJm7pE+ZfG8pgeTb/zn+Qbg+5FhHPCpngyXeZ6OA+W0LivHuc34dd8TkA8WZ6Gay8LfZOgS28i/NH0O/+fUYLXErmrMZiVkB5qcJek9nw+LK8xtjDMkj1Lks6pdKJzJyue7A1/bz3Ob8VXX3aJat3GGK7NTc1VnOz+PSBf6me6srU25Upr3W5L4PXzwXmbAOmc0MUSZnMJZI15a1+8v3FMvuYzq3XXQOa1qnL/HpWv+QzY1NVdnTozm1YmH8e+vwfka//KUt7GamJ4NXF+4P49PJ+rqhcVJ8c2d7JyY+sH9Dj/bb62IOOTEdQkiD0a5jZZ6BGwqKxNe+hxflt+7V+VUd6UalVVQhrw8/eQfPZvTd8mGVEYLK3R/RbEpwSUS3aPp9/5T/Fr11kjTT56y5f+eibvq8f5jfl6f5LQL4IuIZ3NCJIgtuSnD6vf+c/yXULSyRhm5Zuy9tz/oB7nv8O3H1Zii4VxkRHBwliS2b//HpqvDavy6lvXdLmW778763F+G/6mPwm1dXVzCas89f7VQfn39yfLr3Jr0t49fTz9zjvvvPPOO39E/g+KtLquHEMw2wAAAABJRU5ErkJggg==';
+      qrImages[4] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAAChklEQVR4nO2bS2rjQBCGv5oWZNmCHMBHad9gjjTMkXID91HmAAZpGZD5Z9HdsuzgPBjHSEPVQnGkb1FQ/KV6tEx8xfKPL+HgvPPOO++8887f4q1a1371YPvRrFzMzGz/QH+cvzOfJEkDkDRBGkC/+yAgSJJ0yX+3P87fie/q37GH9ALKFkTujx1peC7PDML0IH+cvy/fXf1vaehNjB3Ku+ktvzb/nX/fruOrvJs6S0OPgSHGx/rj/H35Ft8oKLEcO5T7MJF/HsvT5Qhkbf47/4EtiyeCSMPVpT1LknRYm//Ov29vFFreunFCefdqulTv+vx3/jO87UczspmVJqneexKMHeT+5P3v5nnbR8n2ANk6SMPJgJPZryF4/7tNfs7PAkaDbGHSfM9q4dW3NL02/53/DF9nkXEC4qsV/TJa1e9Z2Cv13/lbtuh/xfgsSy8dEI8GUVg6oLOm1+e/8x9YmS4fCIKoeklqRbQGaINp74+2x7f+N07osNglhLJu0AGP75b5Gt+yP2qrI1K7d35Qdb42/51/32r9nA1UyuQypOzrJffHDuLxUf44f1++6rLk4vbqLUqe38Q1Sbt+N8i3/DwAEKRDrAEt+Zk4QRrqi9njuzW+6fdcMDfBVv0OIHl8t8q3vBsnKPplnkXG5WLJ47tJftZvtboVnHviNG8PvT/aIv9m/1tb39CO2w1BLXF7fDfLp1ZEl0or93WdVOorCD5/3ia/rJ/PZfK5PwIWMw/X79b5sumvdrIS6bzz88//C5/7ILI91UoLQPrT3eS/2x/n/4m/mD+X/Ny+X5gTd5l5eH21YT7PXx2ZdUCU6pmsq0PuK/Xf+Rtm/n23884777zzzj+c/wuV6uf2sj2vcwAAAABJRU5ErkJggg==';
+      qrImages[5] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACkElEQVR4nO2bS4rjMBCGvxobslQgB8hR5BvMkYY5Ut/APkoO0GAtAzL/LCSlk2Ye3UzijqG0spJv8UNRD5VKJj6zpm+fwsF555133nnnnf8Tb3X1mFkPJDMbUvsyM7NhRT3O35mPkqQZpHkxs6OkMZzNBjpJkm75R+tx/s58ah467TsRZ5onc/31vPqd//3q3+0NQJMB8eWQbW09zt+Xf29fYGlGDRmR1tXj/GP4IGkEiHPdMrWqSlJeW4/zd+UnMzPbA9CJeOohzp2ApZTP6+px/k58ic83TcrFRFqM6Xg2CLcNzGfT7/xHeBsAG9LFTemkkU5vjm3DinqcvxdPOd1q7kQsabZ91fjcVpSk8dn0O//3VeKzxTGjyToZ4dVE2tPq50OprWwdPc4/iF/MhpDRmOqRST+tx4aQMdsvXl9tk6c2H0Om9CfHINXQHHLZSso1jnt83hjf7NZsSZxBY6j5tyRmwPPvNvnqv3GGalponky1b6mk3b5b5GuynY6513TMvcX5kIGuVlXxZTGiPP9ulG/xuRx4aWEYKE1KPP9umm/1FZeT8OUmuMZngJA9/26Zl5RpbebFmPb1b7N9J+m08/v9bfOpp3StimmDLuejs0E4e/7dJl/7V2WTDqrbsPQi9dmgxwizvH+1Sf72/ihj8bSTUZpYixFHsDiupsf5R/Bv85MlFkdl7McMJXBPPn+1cf5tfnJMO1WrHjOtdPb8u3G+zU+aHc9WhiiBMthxtX1a/c5/jNeY+lo1x9Pu6jj8RXqcvzvfqTxdmIonU534y/Q4/x98K5yC4DILq+n7aw9pJ4szGOG1cc+m3/l/rOvHJ200p9wUXvrP5TfvP2+RN3/f7bzzzjvvvPOr878APIyKoXLcmOgAAAAASUVORK5CYII=';
+      qrImages[6] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACi0lEQVR4nO2bTY6cMBCF3wuWemmkOUAfxdwgRxrNkXIDfJQ+QCS8RDJ6WRR0T3eUzIxEE4iqFgjDt3gScv24CgpfsfztSzjgvPPOO++8887/iedswe6AQrIrAXZHkuw21OP8ynySJA2ApAryLKmPI9mhkSTpnn+2HudX5st1h5aTkAaAZLB3t7v96nf+czx5Hqk3kkhD83vxtHf9zt9beHyQflwfxQqhbKvH+efwUVIPALmdl8hLViWpbq3H+VX5TJJsAaShEV8vAYt/njjn1FvqcX4l3pzxQ5wVykTk80gg3r/bm37nPzArfpJkWbNZGhqpj9eqKM6I+r3pd/4DuxW36qPsq1rAfcif/fsekb8my00lECoBQigtlvz5xXIrbqPH+WfwkkYCcSSARuwA6I0B7GIF2U6eXx2TN/8sDY3MIacBsCVixc1dG+b++ZA8eb7u3yhZ6pwuJyFdgp1PsttQj/Nr8Ut9VAKU2YjAFAAEKLeNMcpdUz3+HptvNO/fEt7l1Owwka8aPf4ek1/i71IQPVa98Pj7H/AkT9bwBTDRkqy+BEiX+eCS3YZ6nF+Lv8bfFxBoxDRAtCYDAAJNBcpJHn+Pztv+zQyYnbTVR7fCeGM9zq/A2/4lYoWlVvn7ACJOQSihEggg4uD798i8NMBOmNkVUn0JgEXi+8bDTvU7/3f+Nj+JpGoXvg4AUAKQff7q4PxtfrIvJ9lobD5XALECyevfo/PL/KT1EnK7tAYz+X65W/3Of46fZ63ifP68dB/+mR7nn8DPk3bnkTZul33+6qj8kjhFATYLW1ogDRPsVCMNABF/Ltze9Dv/gb3/+QRzE3g531guyc+fj8rT/+923nnnnXfe+c35XzOEdPAiZ6eOAAAAAElFTkSuQmCC';
+      qrImages[7] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACcUlEQVR4nO2bTW7rMAyEh5WBLuUb5Cjy1Xoz6yg5wAPsZQEZ0wUly+5fWjw3tQpyoVjJtyBAkNaQihDfsfjwLRww3njjjTfeeOM/4iVbB5F+ERnmDojSAZjLb8Md/TH+KB4kSQSS5OSIMDly9CTJBN1WZDyb/8Z/jZ9LhsYekAGADHB6uBaR7t7+GP8zPMeyIPbl6Rf9Mf7/+O7VXuD/CcK1SwCW7o06Ppv/xn9uJb6eAGaAmB+5fQKwDfLZ/Df+S3wUEZG+vnrrsujx+b7+GH8Qr/lbM5TxkvKiSYx9iT6b/8bfsCJ+Ut6HuvVUpYQw5R9MH7XGa3w5+oRdVBPICQB8AsK0cmfz3/jPTeuz6MPcA2EEJEwLALgkYQQFcCW9z+a/8TdM67OaTyipm5tY2yJt+dsgn+uuBrQ0rEpBzkXa+pN/hPcJABz5dEmQQfWvo+mjdvlSn+sxWYcM2/zN31n+NsvnNrNP4NMloWYyYu+4bUKf03/jP7Sd/nW7JGbWTGVcaPnbHp/7z1HK0SpeUsd4eRaVS4CjhKuUNtbZ/Df+hhV95NZDNNasTchnatNHrfKb89W2F7lZXIm+xbdBftPfyFp3QsnaVQ6vnMW3Nb70N4ppadbWM7Iq0uy2+LbL1/uTqFN98lmAuXuH/2l/jD+Yz/cnAQCLyKBdqw51fiTDPf0x/iC+6N8JG9Wrl+y4zoThk71//wgfe0fA5/5znT7I8Dv+GH8ozxGLbPZR/85g84VG+df3JxGujxR4R8lNaICxd0nu44/xx/K7+X4RRPrqXfvPpo/a5d/cn8yftb/hdhcoz+a/8cYbb7zxxrfIvwBROOd1Wmo2/AAAAABJRU5ErkJggg==';
+      qrImages[8] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACkUlEQVR4nO2aQWrkMBBFX40FvZQhB8hR7BvkSCFHyg3aR8kBAtaywebPoix3T4YMCek47aG0MDZ+iwKhql9fZeIza/j1KRyCDz744IMPPvj3eFtWwvqSsL6YWV8SUOq/fsN4gr8WjySJTpI0NtIxS5AlSRN0Y6ML5Hhr8Qf/Mb6sJ7QkpBHMLPm/89vtxh/8x3h7HJd0TTc2fzdPtx5/8B/gdQQgT/Xth+MJ/st8luqungyyxFBVlVfibeMJ/qr8YGZmLUA5yB5fEjU/zy6ft40n+CvxLpwu62yeEGU2hns/yZvGE/x1+Yv+iG4EyLUr8k4J8HQd/dEe+aXxGQwEguEBvAh3L6mW3VLT883FH/y/15qf5wTlbrJuREZpqZn6zjfZtokn+O/hy0HW55MBs+kI6MkS1ucJs3YOfbVP3utv7YAa6UjjTuXS/1an0qmovzvj677lus8age5sPa8mVuir/fLWA35rZPeLatZTuzA6sjqVtxl/8O+tRT93z2kSTEmUNEHdUOueZ6NT1N+d8mv9ldyw6rS6zn/cFEb93SVf/Y0Rr7rnIlyVFiyeR+zvDvna/5ZmsqEm4dXNwKCZvHvaJp7gv4mfzVUzzFZT84SOfp10ivq7T97PrwGIcrdI5+FhdqVlkDDyGOd3z7wXYfKEmR20jNb5mV4vHjaMJ/jr8uf5yeVqQZNP6kBJMMT81c75blXNekksu3o/UaVz1N+d83V+0noa6amthtVgZgxt+Fc75dObbw0tBvnV6J4PMT/53/E+uuH5+WQMLcsh/qF4gv8SX89vFlDARTT5Nbmr0Y3Uz03iCf66fG2NfC3+s7+t/vOFcRn+5M74t/OTWq+OdPkIfRV88MEHH3zwV+R/A08FkBXyt7EyAAAAAElFTkSuQmCC';
+      qrImages[9] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACo0lEQVR4nO2aUYrjMBBEq9aCfCowB/BR7JvlTHsD6yhzgAXr0yBT+9FSkhlm2QzreGNoQYySvI8C0e5WdVP4zko/voUDzjvvvPPOO+/8n3jWFWwHZJJjDrAdSXLcUY/zG/ODJGkGNAFA6iVNcSFHdJIkfeSfrcf5jfncInSYAV5mgGSw/26719Xv/NcrfPpORAGJAIafb4V763F+W/7z+WKY1vZbLBDyvnqcfw4fpZp6GaApSkitqpJU9tbj/KZ8IkmeAQxzJ17eg+0ArKw19Z56nN+It3fxvUkZFwJYidQvBOJHA/PV9Dv/CM8RAMdMIp07AeikCZ1ugc1xRz3Ob8Vf43cNSr1AZMKCeHgPLe3max39avqdf4TnmE/imElNsQDIAVY/a3Z/48h8jd/UL6xXo3wSkAEldoXDVEDEX+3O9Gr6nf/L0nXBsm4srXSOxW5KkkrlplfT7/wjvJVWtXQGWv49CcN7MH+S4456nN+Kxy25SjMAWEOhQBM6Wf6d0MlaEB6/h+Q1AeAYi3lVHPPJzpwjVvKixf2NY/Itfi3r1iA2pxJRMuPS8+9h+bvz1WQXItSTru9noJ6+n+8B+Zs/KSuo0ggonevfBLoC5JO4jx7nn8PnAKR+obX2x3iL6eVDYf2q+p3/eln8sn5OIqJAYA1CDoVAABFnj98j883iuFqTOQDASgySMMw763F+K/4WvwDQFaS+WLuBw3wGkN8KErvWaXg1/c4/xN/NT17jN/UFrXT2/Htwvs1P8jKvJK0JDBvsaD3hPfU4/xzebr1T85/rmv+bHuc35tN5pc1fpX4h0hk1iP+THuf/ib/OwgqwWdg4t3Irn8Rhhvd/D8zf9Y8A1NGr+mj+Mwb3n4/Kf56f1NcPr6+cd9555513fkP+NyTFfWA66AeUAAAAAElFTkSuQmCC';
+      qrImages[10] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACl0lEQVR4nO2bQW7bMBBF31QCsiSBHMBHkW+QIxU9Um5gHqUHMEAtA0j4XZBUFAdJG0AWomK4kC3rLT4wmNGfIW3iKyv9+BIOzjvvvPPOO+/8R7zV1WMWgRTBzqNZuZiZ2XlHPc5vzA+SpAwMeTb7mUG/YiegkyTpLX9vPc5vxPf1c4wwPINSvKIUrz1DfizPDLppJz3Ob8v3N/cGfbkonab3/HfT7/zn6za+Sk/XXowRA0OM++px/j58kHQBYHwQKXbSJdT8lTTd8vfW4/w2PGvzRCeGfHNpzwZJunw3/c5/vkp9Xg0pU8QgTCidXkxvnu2gx/l78HYezUhmJuVO7bcHwdhDirP3v8fkV/7KCBlgNpJ1E8NzNMFsDBnZPnqc35ZfxVeMhghqtwgrt2NsZfq76Xf+H/lOpJNkZj0k64HRDJjNzkGy8756nN+EX/xz9cq1FwoTEKTqmtuQ0v3z0fgW3zCVDqh9q0GWMtTBtMf3gHx9/w4XRDIQY49SzM06n/fV4/y2PLXwquXvkKGONtTqszTh9fmQfK3PQ+t6V7PIMroKS6X2+B6Qb/mboQ6cwzJrLv5qQpeF8/gejF/yF6TcLV75rd3K7p8Pyq/ev7qEWqmLYS75m1vgPb5H5FvdXW4voWUtYb2x5PE9JL/kb121zQ11qlGLNHj/e0y+9L9184BuKiexCMCQo8H4OEG49j5/PjI/NBP9+ta182ulBuy8px7nN+bHesJZv+JsZWshRSCZGcPv/pa/tx7nt+HfnZ8cMrIUAZh7wdyTTsL3f/8PPpnZa6cEgOT5e1S+Ba5s44OKoSqpCzY8R0hPL+b+6sh8MjOzuNgoOtUzWTeH3L+pfuc/WKa/M6vl/+923nnnnXfe+Q34PwBQvKnYJG9iAAAAAElFTkSuQmCC';
+      qrImages[11] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACdklEQVR4nO2bQW7jMAxFP8cCunSAOZB0s0FvZh+lN5CWAWT8WZCynWmLNqjjiQByYQT2W3yA+KJIKULcE/Ovu3DAeeedd955553/jBeLAMwSIKnYL6C0b+lEPc4fzEeSZAYkrZ8iKwAMJEne8o/W4/zBfGkOjXkRYKwAsOg7Nfa5epw/hg/vXw0V8yVDMGYC5Vw9zj+W5+tlEcQMdbKk/6zH+Z/xzb8joV6NXAJQflfMMqh/9yOQZ9Pv/Lf4WURELoCk8kJJABAzIAmLbp/P1eP8Qbz6d+/QsYLq2rKIGfs8Pc4fy0ObH+uPBgIjqUmexgpOGMipcZyeTb/zX8SWX0RWkBnQ/K6/ELPnt1Pe8sZsNtWpRsww65K1TT88vx3y2IZTZPOvrtRx/TCNnt9O+ZZfHVit7/JtutcS7fntk9cFWbdW1P5IUgmQhIGSsHh/1Cdv/dEsgAChck6hAmMNrTW6ik06TtHj/LE81q1TW6S11ta2YcbArRz7+twb34prtjS2TLcmeJdkz2/PvJ0KSioB5JsIpxIgqYjIn+2k4Wn1O/9x7AxrXe/6aPMr++r+7ZC/aX50ajWwnQ/elF5fn3vmiwhQXvabrNfLIiKXRXa3O55Wv/OfBG/DtlYa6xDL51d989v9STLbLIPTeBWgBNjjRD3OH8xrhc0AUIJNsuJbgJ0f8erzqz75tf+Fbagmrb9V588WWyf8bPqdv5cvoV3NKcGMPa13djrQ7/w+3t+PHTMwC+ySzqwL8yI8R4/zj+FHtvN9rbqkpHVIOekh0pl6nD+G353vAxgI4J8iTHvn9bdHXvg1swv/f7fzzjvvvPPOH8D/BVIy/cKyviVRAAAAAElFTkSuQmCC';
+      qrImages[12] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACnUlEQVR4nO2aTW7bMBBG35QCvJSAHMBHoa6WI/UG0lF6gADi0oCErwuSipygToM6jlQMF4ZkvcUHDOaHM2PiM2f88SkcnHfeeeedd975P/FWToP1LAapgdEaINVv/QP1OH9nPkqSJoB0ktl5hqiLWU+QJOma/2o9zt+ZT9VDx/Oc/7GekK1qZs2j9Tj/NbwGFsuPYwcavlmP8//GN2/eLU4IUjMDS/Pudrw3/c7fPtW+rYAErwYV6aTy9Dg9zn8JP5qZWQfWpwbrYf1Zcvn8WD3O34nP/nvltYtpPM+ouPN1iN6bfuc/OPnyE1WqZuLraytpaCXiVD5o2Jt+52+ftb4KApaG0cKssXtBJAPa5crF96bf+b/hNSQz61MDcVosOywEEacgqDfhvep3/jZvuZfR1iBNOil3OsYO9Hyesf6Bepy/F5/zrzSVXkZuUsYJJM35taZoz7/H4zf9DYuquXY8z43Fn08Cwmwbfm/6nb99tv2r0cAg5CgtuJhgMeLPp2rkvel3/oOzGQ5FKSfhEpolaSBImoLH52PyNblOkG25/uRLcNSMhrZkabfv0fi1/zw3RvtiRC1GnDqD1AEEWfxlfv89Jl/jczvXWWBbq+Yh/xcErdfPB+XX/FvMmFPvAJSuZO1veHw+JL/137yfszrspmtVObfvMflcIZcwfDFIdSBYamrfvzo0/7o/WbZy8iXpUjYpH67H+Tvzm/1JgqwnqGzVtXOeOVj/SD3O34nf3H9zLRWnoOq/67ihnT3//i98e7GypJNOta0xBVn/TXqcvyev5w7q/BcYu8WsT75/dVD+7f4kcVrQeBa2joM1dsHnC8fkt/OFTZNjgtf+c218eP49Hv9+fxIo7kx42+TYn37nnXfeeeedPyL/G9E9qFKvcBROAAAAAElFTkSuQmCC';
+      qrImages[13] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACk0lEQVR4nO2aQYrjMBBFf40MWcrQB+ijWDeYI4W+mXWUPkBAWgZk/ixKcpyZ7qFDO24bqhYmUt7ig/muUpWEeCTir4dwwHjjjTfeeOON/4yXGp1uSsgdEKUDkNt/YUM9xq/MDyTJBIj0AEfdKwDgSJK855+tx/iV+Tw7NHeQ4AsATLp3M/Z+9Rv/cXQfbTL2CQKfCORt9Rj/XJ4jADknAEOamqd/To/x3+Obfz2x9Gp+KYji1L/LFsje9Bv/JT6KiEjfrAsAGBIgAZOWz9vqMX4lXv27cGh8vQrVtXmSauzt9Bi/Lg89/NTzkSOG5MjRF9QHHDk2juPe9Bv//1jUzwJfQKDU9fDeQeAvgiH1W+kxfl2++pKpLUc4XdZfLK37Yf49OF8bVpNIgKOcWbS1wbf+R/QY/32+5VU4Apprm3/JgvarpWjz7yF5OadJ6re4dTUk5A4S4CgBk52Pjsk3/7Zaue3dsu5yyGD+PSYvAQDgr8LRkxLQhkhRTnWwFDbUY/xa/Fw/O2JIQK2kPQn4ssjO5t9D8rV4gi+oD0Bbk3UInOaHvd8D8nN/wxHIHRgDQJ00+EvH2Lsi8ZWQbfQYvy7fDj8J6tDbTQ7tVOqH2/obR+c91b/11pUn+dZPItJPsrzdsVf9xn8SvI9F6gWqdfV1m3+PyGv+bd0LV4hcl4y/L6KTfuSuVV5702/8l/hb1o29U8NieO+gNfXAq/Wvjsnf1VepDoy0nVVbV8DyJLw3/cY/yMf7S+566s0n7WkdQL/xd/HP/dghvRQMadJDMKN+mCfhNnqMfw7vydpw7idBlBMlzE3KUYdIW+oxfh2+9Sc15tIqAbesC5sfHZb/+/4k64OLfbv/bLzxxhtvvPHr8n8AHdTU71gitFkAAAAASUVORK5CYII=';
+      qrImages[14] = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACfElEQVR4nO2aTWrkMBBGX40Ns5Rv0EexbzBnzQ2so8wBAtYyIPPNQrLb053JJNBpLCgtjCW9RUFRvyoTX1nxx5dwcN5555133nnn/8VbXT3AasQBbEpm5WNmZtMT5XH+UTySJEZJ0tJJc5CkpV6Usysyn01+5z/Hp2qhNqUeCBKw1rNq2M+Ux/lv49fij4lDd188NSC/84fV3x91GQAbl/X+9mzyO//x2jQYBCRgfBlMpAGidYIERys+m/zOf4qPZmY2ANDJJjoxLmDT7q6fKo/zD+KL/R4sNF7eDFhNpNWqYT9PHucfy2/10QJAVwoiCBnNISNdL7w+apCv+oVOjMpoptu2C1W/o9e/rfIH+639DaBs52K1mdr9cP02yG9tqk2NxVOXz6744qldvw3yu/12qrE2SJpDLn/VK3v8bZXf7LIodPfFS3fIuTz+tstv+VWoRrxZ7TXqZvD8uXFeM6uV0rdYbfpZyl6bimrfvL/RJn+oj7bSCDQH1SJYHn+b5o/1L2HPpPdKCShbj79N8vV9YZwBUp8hDZTW5CgwwutfLcyzye/85/hkJiljdsnYFCRIPZrTT0Hw+Nsov78P5t4AFKe+2KriQHlpgDRgxcTPJr/zH6/d+dbUysonLABdtnEGi8PT5HH+O/jr/KRmQHMyq1459VCz6+fJ4/yj+Nv5ya3Jke+ejrw+apnf5ieJlwzj7x6zi0Q0s8PtaeV3/v11N0E3vvRZIGx8MSAs4PG3Wf6d+cmaZIkEilOtjLz+bZK/nZ9UvGSuZzYuA4q/XjfubPI7/5+19SeBm6mcvf+Mvx81y9/OT6ps6tSkbm7PJ7/zzjvvvPPOt8j/AayL3TEMCB5kAAAAAElFTkSuQmCC';
   const siteUrl = document.getElementById('siteUrl');
   const seatCount = document.getElementById('seatCount');
   const makeQr = document.getElementById('makeQr');
-  const grid = document.getElementById('qrGrid');
-  const status = document.getElementById('qrStatus');
+  const grid = document.getElementById('grid');
+  const status = document.getElementById('status');
 
-  function buildQrCards(){
-    const n = Math.max(1, Math.min(14, parseInt(seatCount.value || '14', 10)));
+  function render(){
+    let n = parseInt(seatCount.value || '14',10);
+    if(!Number.isFinite(n)) n = 14;
+    n = Math.max(1,Math.min(14,n));
     seatCount.value = n;
     grid.innerHTML = '';
-
-    for(let i=1; i<=n; i++){
-      const orderUrl = siteUrl.value.replace(/\/$/, '') + '/?table=' + i;
+    for(let i=1;i<=n;i++){
+      const url = siteUrl.value.replace(/\/$/,'') + '/?table=' + i;
       const card = document.createElement('article');
-      card.className = 'qr-card';
-      card.innerHTML = `
-        <div class="neon-logo qr-logo">사이</div>
-        <h2>${i}번 자리</h2>
-        <img src="qr-codes/table-${i}.png" alt="${i}번 자리 QR">
-        <p>QR을 찍고 바로 주문하세요.</p>
-        <small class="qr-url">${orderUrl}</small><br>
-        <a class="btn qr-open" href="${orderUrl}">이 자리로 테스트 열기</a>
-      `;
+      card.className='card';
+      card.innerHTML = '<div class="logo">사이</div>'+
+        '<h2>'+i+'번 자리</h2>'+
+        '<img alt="'+i+'번 자리 QR" src="'+qrImages[i]+'">'+
+        '<small>'+url+'</small>'+
+        '<a class="btn test" href="'+url+'">이 자리로 테스트 열기</a>';
       grid.appendChild(card);
     }
-    status.textContent = n + '개 자리 QR 생성 완료';
-    grid.scrollIntoView({behavior:'smooth', block:'start'});
+    status.textContent = 'V3.0 · '+n+'개 자리 QR 생성 완료';
+    setTimeout(()=>grid.scrollIntoView({behavior:'smooth',block:'start'}),50);
   }
-
-  makeQr.addEventListener('click', buildQrCards);
+  makeQr.addEventListener('click',render);
 })();
 </script>
 </body>

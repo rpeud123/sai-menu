@@ -1,3 +1,8 @@
+@import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
+@font-face{font-family:'GMarketSans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');font-weight:300;font-display:swap}
+@font-face{font-family:'GMarketSans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');font-weight:500;font-display:swap}
+@font-face{font-family:'GMarketSans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');font-weight:700;font-display:swap}
+
 
 :root{--bg:#0d0d0d;--panel:#171512;--panel2:#211b15;--text:#f5efe7;--muted:#b8aa9b;--gold:#e0a345;--light:#ffd987;--line:#3a3027;--danger:#e77b70;--ok:#8fb78c}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Noto Sans KR",sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
@@ -68,3 +73,11 @@ body.sheet-open{overflow:hidden}
 @media(max-width:900px){.staff-columns{grid-template-columns:1fr}.staff-columns>section{min-height:auto}.staff-summary{grid-template-columns:repeat(3,1fr)}.staff-summary .btn{grid-column:1/-1;justify-self:stretch}.qr-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.cart-open{padding:9px 11px}.navbuttons{display:none}.menu-order-actions{grid-template-columns:1fr}.staff-header{align-items:flex-start}.staff-header-actions{display:grid}.staff-main{padding:12px}.staff-summary{grid-template-columns:repeat(3,1fr)}.staff-summary strong{font-size:24px}.qr-grid{grid-template-columns:1fr}.cart-row{grid-template-columns:minmax(0,1fr) auto}.cart-row>strong{grid-column:1/-1;text-align:right}}
 @media print{.qr-head,.qr-setup{display:none!important}.qr-main{width:100%;margin:0}.qr-grid{grid-template-columns:repeat(2,1fr);gap:10mm}.qr-card{border:1px solid #ddd;border-radius:0;padding:8mm;page-break-inside:avoid}.qr-card small{font-size:8px}}
+
+
+/* V3.1 typography — menu optimized */
+body,input,textarea,button,select{font-family:'Wanted Sans',-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif}
+.menu-card h3,.whiskey-head,.spotlight-copy strong,.custom-summary h2{font-family:'GMarketSans','Wanted Sans',sans-serif;font-weight:700;letter-spacing:-.035em}
+.menu-card p,.menu-card .muted,.ingredient-row small,.summary-list,.custom-summary p{font-family:'Wanted Sans',sans-serif;font-weight:430;letter-spacing:-.012em;line-height:1.55}
+.menu-card .price,.custom-summary #summaryPrice,.mobile-custom-status strong{font-family:'GMarketSans','Wanted Sans',sans-serif;font-weight:700;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.menu-card .pill,.menu-card .grade,.ingredient-row strong,.summary-list dt{font-family:'Wanted Sans',sans-serif;font-weight:620;letter-spacing:-.015em}
