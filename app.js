@@ -504,8 +504,8 @@ async function submitTableOrder(){
   const payload={
     id:orderId,
     table_no:Number(table),
-    items:orderCart.map(x=>({id:x.id,name:x.name,price:x.price,qty:x.qty,category:x.category,details:x.details||''})),
-    total_amount:total,
+    items:orderCart.map(x=>({id:x.id,name:x.name,price:Number(x.price),qty:Number(x.qty),category:x.category,details:x.details||''})),
+    total_amount:Number(total),
     note:($('#orderNote')?.value||'').trim(),
     status:'new',
     device_id:getOrderDeviceId()
@@ -515,39 +515,49 @@ async function submitTableOrder(){
   if(btn){btn.disabled=true;btn.textContent='주문 전송 중…'}
 
   try{
-    let order;
-    if(orderClient){
-      // 중요: anon 손님은 INSERT만 허용되어 있으므로 .select()를 붙이면
-      // RLS SELECT 정책 때문에 "실패"로 보일 수 있다. ID는 클라이언트에서 생성한다.
-      const {error}=await orderClient.from('orders').insert([payload]);
-      if(error)throw error;
-      order={...payload,created_at:new Date().toISOString()};
-    }else{
-      const local=JSON.parse(localStorage.getItem('sai_demo_orders')||'[]');
-      order={...payload,created_at:new Date().toISOString()};
-      local.unshift(order);
-      localStorage.setItem('sai_demo_orders',JSON.stringify(local));
-      window.dispatchEvent(new StorageEvent('storage',{key:'sai_demo_orders'}));
+    const c=window.SAI_SUPABASE||{};
+    if(!c.url || !c.publishableKey || c.url.includes('PASTE_') || c.publishableKey.includes('PASTE_')){
+      throw new Error('주문 서버 설정이 없습니다. 직원에게 말씀해주세요.');
     }
 
-    lastOrderId=order.id;
+    // Production orders always go directly to Supabase REST using native fetch.
+    // Do not silently fall back to localStorage: a local-only success would never reach staff.
+    const controller=new AbortController();
+    const timer=setTimeout(()=>controller.abort(),12000);
+    let res;
+    try{
+      res=await fetch(c.url.replace(/\/$/,'')+'/rest/v1/orders',{
+        method:'POST',
+        headers:{
+          'apikey':c.publishableKey,
+          'Authorization':'Bearer '+c.publishableKey,
+          'Content-Type':'application/json',
+          'Prefer':'return=minimal'
+        },
+        body:JSON.stringify(payload),
+        signal:controller.signal,
+        cache:'no-store'
+      });
+    }finally{clearTimeout(timer)}
+
+    if(!res.ok){
+      let detail='';
+      try{detail=await res.text()}catch{}
+      throw new Error(`서버 응답 ${res.status}${detail?` · ${detail.slice(0,240)}`:''}`);
+    }
+
+    lastOrderId=orderId;
     orderCart=[];
     saveOrderCart();
     openOrderCart(false);
 
     if($('#orderStatusBadge'))$('#orderStatusBadge').textContent='주문 전송 완료';
-    $('#orderSuccessText').textContent=`${table}번 자리 · ${money(total)} 주문이 직원에게 전달되었습니다.`;
+    if($('#orderSuccessText'))$('#orderSuccessText').textContent=`${table}번 자리 · ${money(total)} 주문이 직원에게 전달되었습니다.`;
     $('#orderSuccess')?.classList.remove('hidden');
-
-    // 고객 측 실시간 상태 조회는 RLS상 별도 인증 설계 전까지 사용하지 않는다.
-    // 직원 주문판의 Realtime INSERT 알림은 정상 동작한다.
   }catch(err){
     console.error('SAI_ORDER_INSERT_ERROR',err);
-    const detail=err?.message||err?.details||'알 수 없는 오류';
-    alert(`주문 전송 실패
-${detail}
-
-직원에게 말씀해주세요.`);
+    const detail=err?.name==='AbortError'?'주문 서버 응답 시간이 초과되었습니다.':(err?.message||err?.details||'알 수 없는 오류');
+    alert(`주문 전송 실패\n${detail}\n\n직원에게 말씀해주세요.`);
   }finally{
     if(btn){btn.disabled=false;btn.textContent='주문 보내기'}
   }
@@ -642,3 +652,22 @@ function v341BindApprovedMenu(){
 }
 document.addEventListener('DOMContentLoaded',()=>setTimeout(v341BindApprovedMenu,160));
 
+
+
+// ===== V3.4.7 CUSTOM CART CTA HOTFIX =====
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const btn=$('#customAddToCart');
+    if(!btn) return;
+    btn.onclick=()=>{
+      try{
+        saveCustomRecipe();
+        const status=$('#customCartStatus');
+        if(status) status.textContent='선택한 조합을 주문 확인창에 담았습니다.';
+      }catch(err){
+        console.error('[YOUR SAI] add-to-cart failed',err);
+        alert('주문에 담는 중 오류가 발생했습니다. 선택한 기주·리큐르·음료를 확인해주세요.');
+      }
+    };
+  },150);
+});

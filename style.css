@@ -94,3 +94,17 @@ body,input,textarea,button,select{font-family:'Wanted Sans',-apple-system,BlinkM
 .ys-price-note{margin:-4px 0 18px;padding:10px 14px;border:1px solid rgba(224,163,69,.22);border-radius:12px;background:rgba(224,163,69,.05);color:#b9aa9a;font-size:13px;line-height:1.5}.ys-choice{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}.ys-choice.selected{border-color:#e0a345!important;box-shadow:0 0 0 1px rgba(224,163,69,.75) inset;background:#241b12!important;color:#fff}.ys-choice.selected:after{content:' ✓';color:#e0a345}
 
 .staff-item-details{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.45;max-width:420px}
+
+/* V3.4.7 당신의 사이 주문 버튼 */
+.custom-order-cta-wrap{margin:20px 0 10px}
+.custom-order-cta{
+  width:100%;
+  min-height:58px;
+  font-size:17px;
+  font-weight:900;
+  position:sticky;
+  bottom:calc(72px + env(safe-area-inset-bottom));
+  z-index:28;
+  box-shadow:0 14px 34px rgba(0,0,0,.42);
+}
+.custom-cart-status{text-align:center;margin-top:8px;font-size:12px}
