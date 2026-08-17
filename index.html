@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>사이 | 오늘 하루, 여기서 잠깐 쉬어가세요</title><link rel="stylesheet" href="style.css?v=347"></head><body>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>사이 | 오늘 하루, 여기서 잠깐 쉬어가세요</title><link rel="stylesheet" href="style.css?v=348"></head><body>
 <div id="splash"><div class="splash-glow"></div><button class="skip" id="skip">건너뛰기</button><div class="splash-content"><div class="neon-logo splash-word">사이</div><div class="splash-line splash-one">오늘 하루,<br>여기서 잠깐 쉬어가세요.</div><div class="splash-line splash-two">한 잔은 비워도,<br>오늘의 기억은 남습니다.</div></div></div>
 <header><div class="container"><nav><button id="menuToggle" class="menu-toggle" aria-label="전체 메뉴">☰</button><div class="brand-mini"><div class="neon-logo mini-word">사이</div><span id="tableBadge" class="table-badge hidden"></span></div><div class="navbuttons"><button data-tab="home" class="active">홈</button><button data-tab="recommend">AI 추천</button><button data-tab="menu">메뉴</button><button data-tab="your">당신의 사이</button><button data-tab="memories">사이의 추억</button></div><button id="cartOpen" class="cart-open" aria-label="장바구니">주문 <span id="cartCount">0</span></button></nav></div></header><div id="sideDrawer" class="side-drawer"><div class="drawer-head"><div class="neon-logo drawer-logo">사이</div><button id="drawerClose" class="drawer-close">×</button></div><button data-tab="home">홈</button><button data-tab="menu">전체 메뉴</button><button data-tab="your">당신의 사이</button><button data-tab="recommend">AI 추천</button><button data-tab="memories">사이의 추억</button><button data-tab="community">커뮤니티</button><button data-tab="about">사이 안내</button></div><div id="drawerDim" class="drawer-dim"></div>
 <main>
@@ -53,18 +53,15 @@
   <div id="menuGrid" class="grid v341-menu-grid"></div>
 </div></section>
 <section id="page-your" class="page hidden section"><div class="container your-sai-onepage">
-<div class="eyebrow">YOUR SAI · CUSTOM COCKTAIL</div><h1 class="title">당신의 사이</h1><p class="muted intro-copy">내 취향대로 만드는, 단 하나의 칵테일. 모든 선택과 예상 결과를 한 페이지에서 확인하세요.</p>
+<div class="eyebrow">YOUR SAI · CUSTOM COCKTAIL <span class="version-chip">V3.4.8</span></div><h1 class="title">당신의 사이</h1><p class="muted intro-copy">내 취향대로 만드는, 단 하나의 칵테일. 모든 선택과 예상 결과를 한 페이지에서 확인하세요.</p>
 <div class="ys-panel"><div class="ys-head"><b>1</b><strong>기주 선택</strong><small>2oz 기본 · 초과분은 0.5oz 단위 추가</small></div><div id="ysBases" class="ys-scroll"></div><div id="ysBaseAmount" class="ys-amount"></div></div>
 <div class="ys-panel"><div class="ys-head"><b>2</b><strong>리큐르 선택</strong><small>2oz 기본 · 선택하면 어떤 맛인지 바로 알려드려요</small></div><h3>과일 리큐르</h3><div id="ysFruitLiq" class="ys-scroll"></div><div id="ysLiqInfo" class="ys-info">리큐르를 선택하면 맛 설명이 여기에 표시됩니다.</div><h3>그 외 리큐르</h3><div id="ysOtherLiq" class="ys-scroll"></div><div id="ysLiqAmount" class="ys-amount"></div></div>
 <div class="ys-panel"><div class="ys-head"><b>3</b><strong>음료 선택</strong><small>한 줄에서 옆으로 넘겨 선택하세요</small></div><div id="ysMixers" class="ys-scroll"></div><div id="ysMixerInfo" class="ys-info">음료를 선택하면 여기에 표시됩니다.</div></div>
 <div class="ys-result"><div><small>예상 도수</small><strong id="summaryAbv">-</strong></div><div><small>예상 가격</small><strong id="summaryPrice">13,000원</strong></div><div><small>예상 맛</small><strong id="summaryFlavor">-</strong></div></div>
 <div id="ysMystery" class="ys-mystery hidden"><b>예상 맛 · 측정 불가</b><span>서로 다른 향이 같은 비율로 만났어요. 어떤 맛일지는 직접 확인해보세요.</span></div>
-<div class="ys-finish"><label>칵테일 이름 <span>(선택)</span></label><input id="customName" placeholder="나만의 칵테일 이름"><label>한 줄 설명 <span>(선택)</span></label><textarea id="customStory" rows="2" placeholder="이 한 잔을 소개해주세요."></textarea><button class="btn primary" id="saveCustomSignature">이 조합으로 주문에 담기</button></div>
+<div class="ys-finish"><label>칵테일 이름 <span>(선택)</span></label><input id="customName" placeholder="나만의 칵테일 이름"><label>한 줄 설명 <span>(선택)</span></label><textarea id="customStory" rows="2" placeholder="이 한 잔을 소개해주세요."></textarea><button class="btn primary your-sai-order-btn" id="saveCustomSignature">이 조합으로 주문에 담기</button><button class="btn ghost your-sai-save-btn" id="saveCustomRecipeOnly">나만의 칵테일로 저장하기</button><div id="customActionStatus" class="custom-action-status muted">주문과 레시피 저장은 서로 별개로 진행됩니다.</div></div>
 <section class="section" style="padding-bottom:0"><div class="row between"><div><div class="eyebrow">COMMUNITY RECIPES</div><h2>손님들의 당신의 사이</h2></div><span class="pill">이달의 칵테일 후보</span></div><div id="recipeRanking" class="grid"></div></section>
 </div>
-<div class="custom-order-cta-wrap">
-  <button id="customAddToCart" class="btn primary custom-order-cta">이 조합으로 주문에 담기</button>
-  <div id="customCartStatus" class="custom-cart-status muted">기주·리큐르·음료를 선택한 뒤 주문에 담아주세요.</div>
 </div>
 </section>
 <section id="page-community" class="page hidden section">
@@ -165,4 +162,4 @@
 </div>
 
 <div id="messageModal" class="hidden" style="position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.8);display:grid;place-items:center;padding:18px"><div class="card full" style="max-width:580px;width:100%"><div class="row between"><div><div class="eyebrow">MESSAGE CHAIN</div><h2 id="chainDrink"></h2></div><button class="btn" id="closeModal">닫기</button></div><p class="muted">직전에 이 술을 주문한 사람이 남긴 글귀입니다.</p><div class="message-box" id="previousMessage"></div><input type="hidden" id="chainDrinkId"><label>다음에 이 술을 주문할 사람에게</label><textarea id="nextMessage" rows="4" placeholder="오늘의 마음이나 짧은 문장을 남겨보세요."></textarea><button class="btn primary" id="saveNextMessage">다음 사람에게 남기기</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js?v=346"></script><script src="app.js?v=347"></script></body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js?v=346"></script><script src="app.js?v=348"></script></body></html>

@@ -654,20 +654,43 @@ document.addEventListener('DOMContentLoaded',()=>setTimeout(v341BindApprovedMenu
 
 
 
-// ===== V3.4.7 CUSTOM CART CTA HOTFIX =====
-document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{
-    const btn=$('#customAddToCart');
-    if(!btn) return;
-    btn.onclick=()=>{
-      try{
-        saveCustomRecipe();
-        const status=$('#customCartStatus');
-        if(status) status.textContent='선택한 조합을 주문 확인창에 담았습니다.';
-      }catch(err){
-        console.error('[YOUR SAI] add-to-cart failed',err);
-        alert('주문에 담는 중 오류가 발생했습니다. 선택한 기주·리큐르·음료를 확인해주세요.');
-      }
-    };
-  },150);
-});
+
+
+// ===== V3.4.8 YOUR SAI ORDER / SAVE SPLIT =====
+function validateYourSaiSelection(){
+  const e=estimateCustom();
+  if(!e.bases.length){alert('기주를 선택해주세요.');return null;}
+  if(!e.liqs.length){alert('리큐르를 한 가지 이상 선택해주세요.');return null;}
+  if(!customState.mixer){alert('음료를 선택해주세요.');return null;}
+  return e;
+}
+function buildYourSaiDetails(e){
+  return `기주: ${e.bases.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 리큐르: ${e.liqs.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 음료: ${e.mixer} / 예상도수: ${e.abv.toFixed(0)}% / 예상맛: ${e.mystery?'측정 불가':(e.tags.join(' · ')||'-')}`;
+}
+function addYourSaiToOrder(){
+  const e=validateYourSaiSelection(); if(!e)return;
+  const customName=$('#customName')?.value.trim()||'당신의 사이';
+  const price=Math.max(13000,Number(e.price||13000));
+  const item={id:'your-sai-'+Date.now(),name:`당신의 사이 · ${customName}`,price,qty:1,category:'시그니처 · 커스텀',details:buildYourSaiDetails(e)};
+  orderCart.push(item);
+  saveOrderCart();
+  updateCartCount();
+  const st=$('#customActionStatus'); if(st)st.textContent=`주문에 담겼어요 ✓ · ${money(price)}`;
+  const btn=$('#saveCustomSignature'); if(btn)btn.textContent='주문에 담김 ✓';
+  openOrderCart(true);
+}
+function saveYourSaiRecipeOnly(){
+  const e=validateYourSaiSelection(); if(!e)return;
+  const name=$('#customName')?.value.trim()||'이름 없는 당신의 사이';
+  const story=$('#customStory')?.value.trim()||'오늘의 취향을 담아 만든 한 잔';
+  DB.recipes.push({id:'r'+Date.now(),name,creator:localStorage.getItem(VISITOR)||'익명의 손님',base:e.bases.map(x=>x.name).join(' + '),taste:e.mystery?'측정 불가':e.tags.join(' · '),mood:'당신의 사이',note:story,likes:0,uses:0,month:new Date().toISOString().slice(0,7),price:Math.max(13000,e.price),abv:+e.abv.toFixed(1),liqueur:e.liqs.map(x=>x.name).join(' + '),mixer:e.mixer,approved:false});
+  saveDB(); renderRecipes();
+  const st=$('#customActionStatus'); if(st)st.textContent='나만의 칵테일로 저장했어요 ✓';
+  alert('나만의 칵테일로 저장되었습니다.');
+}
+function updateCartCount(){const el=$('#cartCount');if(el)el.textContent=orderCart.reduce((s,x)=>s+Number(x.qty||0),0)}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
+  const orderBtn=$('#saveCustomSignature'); if(orderBtn)orderBtn.onclick=addYourSaiToOrder;
+  const saveBtn=$('#saveCustomRecipeOnly'); if(saveBtn)saveBtn.onclick=saveYourSaiRecipeOnly;
+  updateCartCount();
+},220));
