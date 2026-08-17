@@ -1,3 +1,7 @@
+SAI WEB V3.4.3
+- 가격 규칙 수정: 일반 기주 +500원/0.5oz, 론디아즈 +1,000원/0.5oz, 리큐르 +1,000원/0.5oz
+- 기본가격 13,000원 하한 유지
+
 # SAI WEB V2 — 전체 기능 실행형 프로토타입
 
 ## 포함된 고객 기능
@@ -124,3 +128,43 @@ Supabase 설정 전에도 같은 브라우저에서 고객 주문과 직원 주�
 - 리큐르/음료 목록 사용자 지정 목록으로 정리
 - 메뉴 검색: 공백/부호 무시 + 검색어 중 연속 2글자만 맞아도 검색
 - 메뉴명/가격은 Gmarket Sans, 맛/설명/도수/본문은 Wanted Sans 중심으로 재설계
+
+
+# V3.2 QR FINAL
+- qr.html 단일 파일 내부에 1~14번 QR 이미지를 base64로 완전 내장.
+- 외부 QR CDN/라이브러리 의존 없음.
+- 페이지 접속 즉시 1~14번 QR 자동 생성.
+- QR 다시 생성 버튼, 좌석수 변경, 인쇄, 자리별 주문 테스트 링크 제공.
+
+
+# V3.3 ORDER FIX
+- QR 자리 인식 성공 후 주문 전송 실패 문제 수정.
+- 원인: 손님 RLS는 INSERT만 허용하는데 기존 프론트가 INSERT 직후 `.select(...).single()`까지 요청하여 SELECT 정책에서 실패로 처리될 수 있었음.
+- 주문 UUID를 브라우저에서 먼저 생성한 뒤 INSERT만 실행하도록 변경.
+- 실패 시 실제 Supabase 오류 메시지를 팝업에 표시하여 추가 진단 가능.
+- supabase-orders.sql을 V3.3 정책과 맞춰 정리.
+
+
+# V3.4.1 FIX
+- 승인된 홈 UI를 실제 index.html에 적용
+- 승인된 메뉴/검색 UI를 실제 index.html에 적용
+- 당신의 사이 음료 선택 클릭 상태/선택 정보 표시 수정
+- 예상 가격은 무조건 13,000원 이상, 2oz 초과분이 있을 때만 증가
+- CSS/JS cache-busting 적용 (?v=341)
+- QR/Supabase 주문/직원판 코드는 변경하지 않음
+
+
+## V3.4.2 hotfix
+- localStorage stale customBuilder/menu config migration: deployed data.json is now source of truth.
+- mixers fixed to: 토닉, 탄산수, 오렌지 주스, 크랜베리주스, 콜라, 레몬주스, 음료 없음.
+- YOUR SAI minimum price hard-clamped to 13,000원.
+- pricing rule: base 2oz + liqueur 2oz included; base +1,000원/0.5oz; liqueur +500원/0.5oz.
+- mixer/ingredient selection uses delegated click handling for iOS Safari reliability.
+- customer-visible price breakdown shows only surcharge, never bottle cost.
+
+
+## V3.4.4 mixer selection hotfix
+- Fixed YOUR SAI mixer tap crash: UI key `mixer` now correctly reads from `customBuilder.mixers`.
+- Mixer selection now reaches existing selected-state, info, ABV/flavor update logic.
+- Pricing rules from V3.4.3 unchanged.
+- Supabase/order/staff flow unchanged.

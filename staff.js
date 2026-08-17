@@ -13,7 +13,7 @@ function beep(){
 }
 function statusLabel(s){return({new:'신규',accepted:'접수',making:'제조 중',ready:'준비 완료',served:'제공 완료',cancelled:'취소'}[s]||s)}
 function orderCard(o){
- const items=(o.items||[]).map(x=>`<li><strong>${x.name}</strong><span>× ${x.qty}</span></li>`).join('');
+ const items=(o.items||[]).map(x=>`<li><div><strong>${x.name}</strong>${x.details?`<small class="staff-item-details">${x.details}</small>`:''}</div><span>× ${x.qty}</span></li>`).join('');
  const next=o.status==='new'?'accepted':o.status==='accepted'?'making':o.status==='making'?'ready':o.status==='ready'?'served':'';
  const nextText={accepted:'접수하기',making:'제조 시작',ready:'준비 완료',served:'제공 완료'}[next];
  return `<article class="staff-order-card status-${o.status}"><div class="staff-order-top"><span class="table-number">${o.table_no}번 자리</span><span>${new Date(o.created_at).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'})}</span></div><ul>${items}</ul>${o.note?`<div class="staff-note">요청: ${o.note}</div>`:''}<div class="row between"><strong>${money(o.total_amount)}</strong><span class="status-chip">${statusLabel(o.status)}</span></div><div class="staff-order-actions">${next?`<button class="btn primary" data-status-id="${o.id}" data-next="${next}">${nextText}</button>`:''}${!['served','cancelled'].includes(o.status)?`<button class="btn" data-cancel-id="${o.id}">취소</button>`:''}</div></article>`;

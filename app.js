@@ -4,8 +4,31 @@ let DB=null, currentTab='home';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const money=n=>new Intl.NumberFormat('ko-KR').format(Number(n||0))+'원';
 async function initDB(){
-  const saved=localStorage.getItem(DBKEY);
-  if(saved){DB=JSON.parse(saved)}else{DB=await (await fetch('data.json')).json();saveDB()}
+  // V3.4.2 migration: always take structural/config data from the deployed data.json.
+  // Keep only user-created content from localStorage so stale menu/custom-builder settings
+  // (old mixers, old minimum price, etc.) can never survive a deployment.
+  const fresh=await (await fetch('data.json?v=342',{cache:'no-store'})).json();
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(DBKEY)||'null'); }catch(_){ saved=null; }
+  DB=fresh;
+  if(saved){
+    // Preserve user content, never preserve pricing/menu/customBuilder configuration.
+    for(const key of ['memories','recipes','userMemories','messages','community']){
+      if(saved[key]!=null) DB[key]=saved[key];
+    }
+  }
+  // Hard safety rails for YOUR SAI pricing/config.
+  DB.customBuilder.minimumPrice=13000;
+  DB.customBuilder.pricing={
+    ...(DB.customBuilder.pricing||{}),
+    baseIncludedOz:2,
+    liqueurIncludedOz:2,
+    baseExtraPerHalfOz:500,
+    ronDiazExtraPerHalfOz:1000,
+    liqueurExtraPerHalfOz:1000
+  };
+  DB.customBuilder.mixers=['토닉','탄산수','오렌지 주스','크랜베리주스','콜라','레몬주스','음료 없음'];
+  saveDB();
 }
 function saveDB(){localStorage.setItem(DBKEY,JSON.stringify(DB))}
 function allDrinks(){return [...DB.signatures,...DB.menu]}
@@ -174,15 +197,16 @@ estimateCustom=function(){
  const pricing=DB.customBuilder.pricing||{};
  const baseIncluded=Number(pricing.baseIncludedOz??2);
  const liqIncluded=Number(pricing.liqueurIncludedOz??2);
- const baseStep=Number(pricing.baseExtraPerHalfOz??1000);
- const liqStep=Number(pricing.liqueurExtraPerHalfOz??500);
+ const hasRonDiaz=e.bases.some(x=>String(x.name||'').replace(/\s+/g,'').includes('론디아즈'));
+ const baseStep=hasRonDiaz?Number(pricing.ronDiazExtraPerHalfOz??1000):Number(pricing.baseExtraPerHalfOz??500);
+ const liqStep=Number(pricing.liqueurExtraPerHalfOz??1000);
  const baseOz=e.bases.reduce((s,x)=>s+x.oz,0);
  const liqOz=e.liqs.reduce((s,x)=>s+x.oz,0);
  const baseOver=Math.max(0,baseOz-baseIncluded);
  const liqOver=Math.max(0,liqOz-liqIncluded);
  const baseExtra=Math.ceil(baseOver/0.5)*baseStep;
  const liqExtra=Math.ceil(liqOver/0.5)*liqStep;
- e.price=Number(DB.customBuilder.minimumPrice||13000)+baseExtra+liqExtra;
+ e.price=Math.max(13000,13000+baseExtra+liqExtra);
  e.baseExtra=baseExtra;
  e.liqueurExtra=liqExtra;
  e.baseIncluded=baseIncluded;
@@ -463,39 +487,67 @@ bindOrderButtons=function(){
   $$('.add-cart').forEach(b=>b.onclick=()=>addOrderItem(b.dataset.id));
   $$('.your-direct').forEach(b=>b.onclick=()=>tab('your'));
 };
+function makeOrderId(){
+  if(window.crypto?.randomUUID) return window.crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{
+    const r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);
+    return v.toString(16);
+  });
+}
 async function submitTableOrder(){
   const table=getTableNumber();
   if(!table)return alert('테이블 QR로 접속해야 주문할 수 있습니다. 직원에게 QR을 요청해주세요.');
   if(!orderCart.length)return alert('주문할 메뉴를 먼저 담아주세요.');
+
   const total=orderCart.reduce((s,x)=>s+x.qty*x.price,0);
+  const orderId=makeOrderId();
   const payload={
+    id:orderId,
     table_no:Number(table),
-    items:orderCart.map(x=>({id:x.id,name:x.name,price:x.price,qty:x.qty,category:x.category})),
+    items:orderCart.map(x=>({id:x.id,name:x.name,price:x.price,qty:x.qty,category:x.category,details:x.details||''})),
     total_amount:total,
     note:($('#orderNote')?.value||'').trim(),
     status:'new',
     device_id:getOrderDeviceId()
   };
-  const btn=$('#submitOrder');if(btn){btn.disabled=true;btn.textContent='주문 전송 중…'}
+
+  const btn=$('#submitOrder');
+  if(btn){btn.disabled=true;btn.textContent='주문 전송 중…'}
+
   try{
     let order;
     if(orderClient){
-      const {data,error}=await orderClient.from('orders').insert(payload).select('id,created_at,status').single();
+      // 중요: anon 손님은 INSERT만 허용되어 있으므로 .select()를 붙이면
+      // RLS SELECT 정책 때문에 "실패"로 보일 수 있다. ID는 클라이언트에서 생성한다.
+      const {error}=await orderClient.from('orders').insert([payload]);
       if(error)throw error;
-      order=data;
+      order={...payload,created_at:new Date().toISOString()};
     }else{
       const local=JSON.parse(localStorage.getItem('sai_demo_orders')||'[]');
-      order={...payload,id:'demo-'+Date.now(),created_at:new Date().toISOString()};
-      local.unshift(order);localStorage.setItem('sai_demo_orders',JSON.stringify(local));
+      order={...payload,created_at:new Date().toISOString()};
+      local.unshift(order);
+      localStorage.setItem('sai_demo_orders',JSON.stringify(local));
       window.dispatchEvent(new StorageEvent('storage',{key:'sai_demo_orders'}));
     }
+
     lastOrderId=order.id;
-    orderCart=[];saveOrderCart();openOrderCart(false);
+    orderCart=[];
+    saveOrderCart();
+    openOrderCart(false);
+
+    if($('#orderStatusBadge'))$('#orderStatusBadge').textContent='주문 전송 완료';
     $('#orderSuccessText').textContent=`${table}번 자리 · ${money(total)} 주문이 직원에게 전달되었습니다.`;
     $('#orderSuccess')?.classList.remove('hidden');
-    if(orderClient)subscribeCustomerOrder(order.id);
+
+    // 고객 측 실시간 상태 조회는 RLS상 별도 인증 설계 전까지 사용하지 않는다.
+    // 직원 주문판의 Realtime INSERT 알림은 정상 동작한다.
   }catch(err){
-    console.error(err);alert('주문 전송에 실패했습니다. 잠시 후 다시 시도하거나 직원에게 말씀해주세요.');
+    console.error('SAI_ORDER_INSERT_ERROR',err);
+    const detail=err?.message||err?.details||'알 수 없는 오류';
+    alert(`주문 전송 실패
+${detail}
+
+직원에게 말씀해주세요.`);
   }finally{
     if(btn){btn.disabled=false;btn.textContent='주문 보내기'}
   }
@@ -519,3 +571,74 @@ function initTableOrderUI(){
   bindOrderButtons();
 }
 document.addEventListener('DOMContentLoaded',()=>setTimeout(initTableOrderUI,120));
+
+// ===== V3.4.1 approved UI + YOUR SAI bugfix =====
+customState={bases:{},liqueurs:{},mixer:null};
+function ysCard(x,type,i){const name=x?.name||x;return `<button type="button" class="ys-choice" data-ys-type="${type}" data-index="${i}"><strong>${name}</strong>${x?.taste?`<small>${x.taste}</small>`:''}</button>`}
+function ysAmount(type){const vals=Object.values(customState[type]||{}),total=vals.reduce((s,x)=>s+Number(x.oz||0),0);return `<span>사용량</span><button type="button" data-ys-minus="${type}">−</button><strong>${total.toFixed(1)} oz</strong><button type="button" data-ys-plus="${type}">＋</button><small>${total<=2?'기본 포함':'추가금 적용'}</small>`}
+function initCustomBuilder(){
+ const c=DB.customBuilder;if(!$('#ysBases'))return;
+ $('#ysBases').innerHTML=c.bases.map((x,i)=>ysCard(x,'bases',i)).join('');
+ const fruit=c.liqueurs.map((x,i)=>({...x,_i:i})).filter(x=>x.group==='fruit'),other=c.liqueurs.map((x,i)=>({...x,_i:i})).filter(x=>x.group!=='fruit');
+ $('#ysFruitLiq').innerHTML=fruit.map(x=>ysCard(x,'liqueurs',x._i)).join('');
+ $('#ysOtherLiq').innerHTML=other.map(x=>ysCard(x,'liqueurs',x._i)).join('');
+ $('#ysMixers').innerHTML=c.mixers.map((x,i)=>ysCard(x,'mixer',i)).join('');
+ // Choice clicks are handled by delegated click below (more reliable on iOS/Safari and after re-render).
+ $('#saveCustomSignature').onclick=saveCustomRecipe;
+ updateCustomSummary();
+}
+function ysSelect(btn){
+ const type=btn.dataset.ysType,i=Number(btn.dataset.index);
+ // UI type is singular `mixer`, but the data source is plural `mixers`.
+ // Using the singular key here caused an exception on every mixer tap.
+ const sourceKey=type==='mixer'?'mixers':type;
+ const source=DB.customBuilder?.[sourceKey]||[];
+ const raw=source[i];
+ if(raw==null){console.error('[YOUR SAI] choice data not found', {type,sourceKey,i});return;}
+ const name=raw?.name||raw;
+ if(type==='mixer'){
+   $$('[data-ys-type="mixer"]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');customState.mixer=name;
+   const map={'토닉':'청량 · 탄산','토닉워터':'청량 · 탄산','탄산수':'청량 · 깔끔','오렌지 주스':'과일 · 달콤 · 상큼','크랜베리주스':'과일 · 새콤','콜라':'달콤 · 탄산','레몬주스':'시트러스 · 새콤','음료 없음':'진한 맛'};
+   if($('#ysMixerInfo'))$('#ysMixerInfo').innerHTML=`<strong>${name} 선택됨 ✓</strong><span>${map[name]||'선택한 음료가 예상 도수와 맛에 반영됩니다.'}</span>`;
+ }else if(type==='bases'){
+   customState.bases={};$$('[data-ys-type="bases"]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');customState.bases[name]={...raw,oz:2};
+ }else{
+   if(customState.liqueurs[name]){delete customState.liqueurs[name];btn.classList.remove('selected')}
+   else{customState.liqueurs[name]={...raw,oz:Object.keys(customState.liqueurs).length?1:2};btn.classList.add('selected');if($('#ysLiqInfo'))$('#ysLiqInfo').innerHTML=`<strong>${name}</strong><span>${raw.taste||''}${raw.tags?` 맛 · ${raw.tags}`:''}</span>`}
+ }
+ updateCustomSummary();
+}
+function ysChange(type,delta){const vals=Object.values(customState[type]||{});if(!vals.length)return;const x=vals[vals.length-1],next=Math.max(.5,Math.min(4,Number(x.oz||0)+delta));x.oz=Math.round(next*2)/2;customState[type][x.name]=x;updateCustomSummary()}
+document.addEventListener('click',e=>{
+ const choice=e.target.closest?.('.ys-choice[data-ys-type]');
+ if(choice){e.preventDefault();ysSelect(choice);return;}
+ const plus=e.target.closest?.('[data-ys-plus]'),minus=e.target.closest?.('[data-ys-minus]');
+ if(plus){e.preventDefault();ysChange(plus.dataset.ysPlus,.5);return;}
+ if(minus){e.preventDefault();ysChange(minus.dataset.ysMinus,-.5);}
+});
+function chosen(type){return Object.values(customState[type]||{})}
+function estimateCustom(){
+ const bases=chosen('bases'),liqs=chosen('liqueurs'),baseOz=bases.reduce((s,x)=>s+Number(x.oz||0),0),liqOz=liqs.reduce((s,x)=>s+Number(x.oz||0),0),mixer=customState.mixer;
+ const spiritOz=baseOz+liqOz,mixerOz=mixer&&mixer!=='음료 없음'?3:0,finalOz=Math.max(1,spiritOz+mixerOz);
+ const alcohol=bases.concat(liqs).reduce((s,x)=>s+Number(x.oz||0)*Number(x.abv||0)/100,0),abv=alcohol/finalOz*100;
+ const baseExtraSteps=Math.max(0,Math.ceil((baseOz-2)/.5));
+ const liqExtraSteps=Math.max(0,Math.ceil((liqOz-2)/.5));
+ const hasRonDiaz=bases.some(x=>String(x.name||'').replace(/\s+/g,'').includes('론디아즈'));
+ const baseRate=hasRonDiaz?1000:500;
+ const price=Math.max(13000,13000+baseExtraSteps*baseRate+liqExtraSteps*1000);
+ let mystery=false;if(liqs.length>=2){for(let i=0;i<liqs.length;i++)for(let j=i+1;j<liqs.length;j++)if(Math.abs(Number(liqs[i].oz)-Number(liqs[j].oz))<.01)mystery=true}
+ let tags=[];liqs.forEach(x=>tags.push(...String(x.tags||x.taste||'').split(/\s*·\s*/)));
+ const mixTags={'토닉':['청량','탄산'],'토닉워터':['청량','탄산'],'탄산수':['청량'],'오렌지 주스':['과일','달콤'],'크랜베리주스':['과일','새콤'],'콜라':['달콤','탄산'],'레몬주스':['시트러스','새콤'],'음료 없음':[]};
+ tags.push(...(mixTags[mixer]||[]));if(!tags.length&&bases.length)tags=String(bases[0].taste||'').split(/\s*·\s*/);tags=[...new Set(tags.filter(Boolean))].slice(0,3);
+ return {bases,liqs,baseOz,liqOz,abv,price,mystery,tags,mixer};
+}
+function updateCustomSummary(){if(!$('#ysBases'))return;const e=estimateCustom();$('#ysBaseAmount').innerHTML=ysAmount('bases');$('#ysLiqAmount').innerHTML=ysAmount('liqueurs');$('#summaryAbv').textContent=e.bases.length?`약 ${e.abv.toFixed(0)}%`:'-';$('#summaryPrice').textContent=money(Math.max(13000,e.price));$('#summaryFlavor').textContent=e.mystery?'측정 불가':(e.tags.join(' · ')||'-');$('#ysMystery').classList.toggle('hidden',!e.mystery);let note=$('#ysPriceNote');if(!note){note=document.createElement('div');note.id='ysPriceNote';note.className='ys-price-note';document.querySelector('.ys-result')?.after(note)}const p=DB.customBuilder.pricing||{};const bo=Math.max(0,e.baseOz-2),lo=Math.max(0,e.liqOz-2),hasRon=e.bases.some(x=>String(x.name||'').replace(/\s+/g,'').includes('론디아즈')),baseRate=hasRon?Number(p.ronDiazExtraPerHalfOz||1000):Number(p.baseExtraPerHalfOz||500),be=Math.ceil(bo/.5)*baseRate,le=Math.ceil(lo/.5)*Number(p.liqueurExtraPerHalfOz||1000);note.textContent=(be||le)?`기본 13,000원 + 기주 초과 ${money(be)} + 리큐르 초과 ${money(le)}`:'기주 2oz + 리큐르 2oz + 음료까지 기본 13,000원';}
+function saveCustomRecipe(){const e=estimateCustom();if(!e.bases.length)return alert('기주를 선택해주세요.');if(!e.liqs.length)return alert('리큐르를 한 가지 이상 선택해주세요.');if(!customState.mixer)return alert('음료를 선택해주세요.');const name=$('#customName').value.trim()||'당신의 사이',story=$('#customStory').value.trim()||'오늘의 취향을 담아 만든 한 잔',price=Math.max(13000,e.price),details=`기주: ${e.bases.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 리큐르: ${e.liqs.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 음료: ${e.mixer} / 예상도수: ${e.abv.toFixed(0)}% / 예상맛: ${e.mystery?'측정 불가':(e.tags.join(' · ')||'-')}`;DB.recipes.push({id:'r'+Date.now(),name,creator:localStorage.getItem(VISITOR)||'익명의 손님',base:e.bases.map(x=>x.name).join(' + '),taste:e.mystery?'측정 불가':e.tags.join(' · '),mood:'당신의 사이',note:story,likes:0,uses:0,month:new Date().toISOString().slice(0,7),price,abv:+e.abv.toFixed(1),liqueur:e.liqs.map(x=>x.name).join(' + '),mixer:e.mixer,approved:false});saveDB();renderRecipes();const id='your-sai-'+Date.now();orderCart.push({id,name:`당신의 사이 · ${name}`,price,qty:1,category:'시그니처 · 커스텀',details});saveOrderCart();openOrderCart(true);alert('완성한 당신의 사이를 주문에 담았습니다. 주문 확인 후 보내주세요.')}
+
+// Approved menu usability interactions
+function v341BindApprovedMenu(){
+ $('#showAllMenu')?.addEventListener('click',()=>{v25MenuQuery='';v25MenuMood='';if($('#menuSearch'))$('#menuSearch').value='';$$('[data-menu-mood]').forEach(x=>x.classList.remove('active'));renderMenu('전체');$('#filters')?.scrollIntoView({behavior:'smooth',block:'start'})});
+ $('#tasteMoreToggle')?.addEventListener('click',()=>{const box=$('#tasteMore');box?.classList.toggle('hidden');if(box)$('#tasteMoreToggle').textContent=box.classList.contains('hidden')?'취향 더보기 ＋':'취향 접기 −'});
+}
+document.addEventListener('DOMContentLoaded',()=>setTimeout(v341BindApprovedMenu,160));
+

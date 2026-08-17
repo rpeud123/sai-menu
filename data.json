@@ -29,9 +29,10 @@
       "score": 92,
       "cost": 0,
       "tags": [
-        "달콤",
-        "상큼",
-        "시트러스"
+        "레몬",
+        "청량",
+        "과일",
+        "달콤"
       ]
     },
     {
@@ -45,9 +46,10 @@
       "score": 91,
       "cost": 0,
       "tags": [
-        "위로",
-        "고도수",
-        "천천히"
+        "중도수",
+        "과일",
+        "무탄산",
+        "새콤"
       ]
     },
     {
@@ -72,14 +74,13 @@
       "price": 14000,
       "abv": "취향에 따라",
       "category": "시그니처",
-      "copy": "원하시는 입맛대로 즉석에서 주조해드립니다.",
+      "copy": "오늘 만난 당신의 첫 인상을 담은 칵테일.",
       "recipe": "관리자 화면에서 정확한 레시피 입력",
       "score": 90,
       "cost": 0,
       "tags": [
-        "사장님 추천",
-        "첫인상",
-        "커스텀"
+        "첫인상 칵테일",
+        "맛의 비밀"
       ]
     },
     {
@@ -93,8 +94,9 @@
       "score": 87,
       "cost": 0,
       "tags": [
+        "시나몬",
+        "청량",
         "씁쓸",
-        "시트러스",
         "새콤"
       ]
     },
@@ -109,9 +111,10 @@
       "score": 94,
       "cost": 0,
       "tags": [
-        "묵직",
-        "상큼",
-        "과일"
+        "고도수",
+        "달콤",
+        "과일",
+        "시트러스"
       ]
     },
     {
@@ -889,207 +892,148 @@
     "minimumPrice": 13000,
     "ozOptions": [
       0.5,
-      1.0,
+      1,
       1.5,
-      2.0
+      2,
+      2.5,
+      3
     ],
     "bases": [
       {
         "name": "보드카",
-        "family": "보드카",
         "abv": 40,
-        "costPerOz": 800,
-        "baseCostPerOz": 800,
-        "premiumStep": 0,
-        "color": "투명"
-      },
-      {
-        "name": "화이트럼",
-        "family": "럼",
-        "abv": 40,
-        "costPerOz": 800,
-        "baseCostPerOz": 800,
-        "premiumStep": 0,
-        "color": "투명"
-      },
-      {
-        "name": "일반 럼",
-        "family": "럼",
-        "abv": 40,
-        "costPerOz": 900,
-        "baseCostPerOz": 900,
-        "premiumStep": 0,
-        "color": "호박색"
-      },
-      {
-        "name": "론디아즈151",
-        "family": "럼",
-        "abv": 75.5,
-        "costPerOz": 1050,
-        "baseCostPerOz": 800,
-        "premiumStep": 250,
-        "color": "호박색"
+        "taste": "깔끔·부드러움"
       },
       {
         "name": "진",
-        "family": "진",
         "abv": 40,
-        "costPerOz": 900,
-        "baseCostPerOz": 900,
-        "premiumStep": 0,
-        "color": "투명"
+        "taste": "허브·산뜻함"
       },
       {
-        "name": "봄베이 진",
-        "family": "진",
-        "abv": 47,
-        "costPerOz": 1050,
-        "baseCostPerOz": 900,
-        "premiumStep": 150,
-        "color": "투명"
-      },
-      {
-        "name": "핸드릭스 진",
-        "family": "진",
-        "abv": 44,
-        "costPerOz": 1450,
-        "baseCostPerOz": 900,
-        "premiumStep": 550,
-        "color": "투명"
-      },
-      {
-        "name": "듀랑고 골드",
-        "family": "데킬라",
+        "name": "럼",
         "abv": 40,
-        "costPerOz": 800,
-        "baseCostPerOz": 800,
-        "premiumStep": 0,
-        "color": "금빛"
+        "taste": "달콤·부드러움"
       },
       {
-        "name": "호세 쿠엘보",
-        "family": "데킬라",
-        "abv": 38,
-        "costPerOz": 950,
-        "baseCostPerOz": 800,
-        "premiumStep": 150,
-        "color": "금빛"
+        "name": "데킬라",
+        "abv": 40,
+        "taste": "강렬·드라이"
+      },
+      {
+        "name": "론디아즈",
+        "abv": 75.5,
+        "taste": "강렬·고도수"
       }
     ],
     "liqueurs": [
       {
-        "name": "말리부",
-        "abv": 21,
-        "costPerOz": 600,
-        "taste": "코코넛",
-        "color": "투명"
-      },
-      {
         "name": "피치트리",
         "abv": 20,
-        "costPerOz": 550,
+        "bottleCost": 24000,
+        "costPerOz": 1014,
         "taste": "복숭아",
-        "color": "투명"
-      },
-      {
-        "name": "깔루아",
-        "abv": 20,
-        "costPerOz": 600,
-        "taste": "커피",
-        "color": "갈색"
-      },
-      {
-        "name": "베일리스",
-        "abv": 17,
-        "costPerOz": 700,
-        "taste": "크리미",
-        "color": "크림색"
-      },
-      {
-        "name": "멜론퍼커",
-        "abv": 20,
-        "costPerOz": 550,
-        "taste": "멜론",
-        "color": "초록색"
-      },
-      {
-        "name": "애플퍼커",
-        "abv": 15,
-        "costPerOz": 550,
-        "taste": "사과",
-        "color": "초록색"
-      },
-      {
-        "name": "레몬샤워",
-        "abv": 15,
-        "costPerOz": 550,
-        "taste": "레몬",
-        "color": "노란색"
-      },
-      {
-        "name": "바나나디카이퍼",
-        "abv": 15,
-        "costPerOz": 550,
-        "taste": "바나나",
-        "color": "노란색"
+        "tags": "과일 · 달콤",
+        "group": "fruit"
       },
       {
         "name": "트리플섹",
         "abv": 30,
-        "costPerOz": 500,
-        "taste": "시트러스",
-        "color": "투명"
+        "bottleCost": 16000,
+        "costPerOz": 676,
+        "taste": "오렌지",
+        "tags": "시트러스 · 상큼",
+        "group": "fruit"
+      },
+      {
+        "name": "카시스",
+        "abv": 16,
+        "bottleCost": 15000,
+        "costPerOz": 634,
+        "taste": "블랙커런트",
+        "tags": "베리 · 달콤",
+        "group": "fruit"
+      },
+      {
+        "name": "블루큐라소",
+        "abv": 21,
+        "bottleCost": 15000,
+        "costPerOz": 634,
+        "taste": "오렌지",
+        "tags": "시트러스 · 달콤",
+        "group": "fruit"
+      },
+      {
+        "name": "애플퍼커",
+        "abv": 15,
+        "bottleCost": 20000,
+        "costPerOz": 845,
+        "taste": "사과",
+        "tags": "과일 · 새콤",
+        "group": "fruit"
+      },
+      {
+        "name": "말리부",
+        "abv": 21,
+        "bottleCost": 20000,
+        "costPerOz": 845,
+        "taste": "코코넛",
+        "tags": "달콤 · 부드러움",
+        "group": "other"
       },
       {
         "name": "아마레또",
         "abv": 28,
-        "costPerOz": 700,
+        "bottleCost": 20000,
+        "costPerOz": 845,
         "taste": "아몬드",
-        "color": "호박색"
+        "tags": "고소 · 달콤",
+        "group": "other"
       },
       {
-        "name": "카카오(화이트)",
-        "abv": 24,
-        "costPerOz": 650,
-        "taste": "초콜릿",
-        "color": "크림색"
+        "name": "깔루아",
+        "abv": 20,
+        "bottleCost": 20000,
+        "costPerOz": 845,
+        "taste": "커피",
+        "tags": "커피 · 달콤",
+        "group": "other"
       },
       {
-        "name": "카카오(브라운)",
-        "abv": 24,
-        "costPerOz": 650,
-        "taste": "초콜릿",
-        "color": "갈색"
+        "name": "베일리스",
+        "abv": 17,
+        "bottleCost": 20000,
+        "costPerOz": 845,
+        "taste": "크림",
+        "tags": "크리미 · 달콤",
+        "group": "other"
       },
       {
-        "name": "디카이퍼민트",
+        "name": "디카이퍼 민트",
         "abv": 24,
-        "costPerOz": 600,
+        "bottleCost": 18000,
+        "costPerOz": 760,
         "taste": "민트",
-        "color": "초록색"
+        "tags": "상쾌 · 청량",
+        "group": "other"
       },
       {
-        "name": "디카이퍼카시스",
-        "abv": 16,
-        "costPerOz": 650,
-        "taste": "베리",
-        "color": "자주색"
-      },
-      {
-        "name": "디카이퍼블루큐라소",
-        "abv": 21,
-        "costPerOz": 550,
-        "taste": "오렌지",
-        "color": "파란색"
+        "name": "크림 데 카카오",
+        "abv": 24,
+        "bottleCost": 20000,
+        "costPerOz": 845,
+        "taste": "초콜릿",
+        "tags": "초콜릿 · 달콤",
+        "group": "other"
       }
     ],
     "mixers": [
-      "토닉워터",
-      "오렌지주스",
-      "콜라",
+      "토닉",
       "탄산수",
-      "파인애플주스",
-      "라임즙"
+      "오렌지 주스",
+      "크랜베리주스",
+      "콜라",
+      "레몬주스",
+      "음료 없음"
     ],
     "flavors": [
       "달콤",
@@ -1182,10 +1126,12 @@
       "없음"
     ],
     "pricing": {
-      "baseIncludedOz": 2.0,
-      "liqueurIncludedOz": 2.0,
-      "baseExtraPerHalfOz": 1000,
-      "liqueurExtraPerHalfOz": 500
+      "baseIncludedOz": 2,
+      "liqueurIncludedOz": 2,
+      "baseExtraPerHalfOz": 500,
+      "liqueurExtraPerHalfOz": 1000,
+      "minimumPrice": 13000,
+      "ronDiazExtraPerHalfOz": 1000
     }
   },
   "community": [
