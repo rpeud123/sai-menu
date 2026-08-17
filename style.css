@@ -114,3 +114,9 @@ body,input,textarea,button,select{font-family:'Wanted Sans',-apple-system,BlinkM
 .your-sai-order-btn{width:100%;min-height:60px;font-size:18px;font-weight:900;margin-top:18px;box-shadow:0 10px 26px rgba(0,0,0,.3)}
 .your-sai-save-btn{width:100%;min-height:50px;margin-top:10px;font-weight:750}
 .custom-action-status{text-align:center;font-size:12px;margin-top:8px}
+
+/* V3.4.9 force-order UI */
+.your-sai-order-btn{display:block!important;width:100%!important;min-height:58px!important;margin-top:18px!important;background:var(--gold)!important;color:#111!important;font-weight:900!important;opacity:1!important;visibility:visible!important}
+.your-sai-save-btn{display:block!important;width:100%!important;min-height:50px!important;margin-top:10px!important;background:transparent!important;border:1px solid rgba(232,170,66,.45)!important;color:var(--text)!important;opacity:1!important;visibility:visible!important}
+.custom-action-status{display:block!important;text-align:center;margin:8px 4px 0;font-size:12px;color:var(--muted)}
+.build-version,.v349-runtime-badge{display:inline-flex;margin-left:8px;padding:2px 7px;border:1px solid rgba(232,170,66,.45);border-radius:999px;font-size:10px;letter-spacing:.08em;color:#e8aa42;vertical-align:middle}

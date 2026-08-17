@@ -122,7 +122,7 @@ function initCustomBuilder(){
  simpleChoices('#mixerChoices',c.mixers,'mixer'); simpleChoices('#flavorChoices',c.flavors,'flavors',true); simpleChoices('#aromaChoices',c.aromas,'aromas',true); simpleChoices('#glassChoices',c.glasses,'glass'); simpleChoices('#iceChoices',c.ices,'ice'); simpleChoices('#garnishChoices',c.garnishes,'garnish');
  $$('[data-ing-type]').forEach(b=>b.onclick=()=>setIngredient(b)); $$('[data-simple-type]').forEach(b=>b.onclick=()=>setSimple(b));
  $$('.builder-step').forEach(b=>b.onclick=()=>goBuilderStep(+b.dataset.builderStep)); $('#builderPrev').onclick=()=>goBuilderStep(Math.max(1,builderStep-1)); $('#builderNext').onclick=()=>builderStep<9?goBuilderStep(builderStep+1):finishBuilder();
- $('#customName').oninput=e=>$('#customPreviewName').textContent=e.target.value.trim()||'당신의 사이'; $('#randomRecommend').onclick=randomOwnerRecommend; $('#saveCustomSignature').onclick=saveCustomRecipe;
+ $('#customName').oninput=e=>$('#customPreviewName').textContent=e.target.value.trim()||'당신의 사이'; $('#randomRecommend').onclick=randomOwnerRecommend; // V3.4.9: order button is bound by forceYourSaiOrderUI()
  goBuilderStep(1); updateCustomSummary();
 }
 function setIngredient(btn){const type=btn.dataset.ingType,i=+btn.dataset.index,oz=+btn.dataset.oz,item=DB.customBuilder[type][i]; if(oz===0)delete customState[type][item.name];else customState[type][item.name]={...item,oz}; $$(`[data-ing-type="${type}"][data-index="${i}"]`).forEach(x=>x.classList.toggle('selected',+x.dataset.oz===oz&&oz>0));updateCustomSummary()}
@@ -594,7 +594,7 @@ function initCustomBuilder(){
  $('#ysOtherLiq').innerHTML=other.map(x=>ysCard(x,'liqueurs',x._i)).join('');
  $('#ysMixers').innerHTML=c.mixers.map((x,i)=>ysCard(x,'mixer',i)).join('');
  // Choice clicks are handled by delegated click below (more reliable on iOS/Safari and after re-render).
- $('#saveCustomSignature').onclick=saveCustomRecipe;
+ // V3.4.9: order button is bound by forceYourSaiOrderUI()
  updateCustomSummary();
 }
 function ysSelect(btn){
@@ -694,3 +694,54 @@ document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
   const saveBtn=$('#saveCustomRecipeOnly'); if(saveBtn)saveBtn.onclick=saveYourSaiRecipeOnly;
   updateCartCount();
 },220));
+
+
+// ===== V3.4.9 FORCE YOUR-SAI ORDER UI =====
+function forceYourSaiOrderUI(){
+  const orderBtn=document.getElementById('saveCustomSignature');
+  if(!orderBtn) return;
+
+  // Even if an older cached HTML is rendered, force the visible primary CTA to ordering.
+  orderBtn.type='button';
+  orderBtn.textContent='이 조합으로 주문에 담기';
+  orderBtn.classList.add('your-sai-order-btn');
+  orderBtn.onclick=addYourSaiToOrder;
+
+  let saveBtn=document.getElementById('saveCustomRecipeOnly');
+  if(!saveBtn){
+    saveBtn=document.createElement('button');
+    saveBtn.id='saveCustomRecipeOnly';
+    saveBtn.type='button';
+    saveBtn.className='btn ghost your-sai-save-btn';
+    saveBtn.textContent='나만의 칵테일로 저장하기';
+    orderBtn.insertAdjacentElement('afterend',saveBtn);
+  }else{
+    saveBtn.type='button';
+    saveBtn.textContent='나만의 칵테일로 저장하기';
+  }
+  saveBtn.onclick=saveYourSaiRecipeOnly;
+
+  let st=document.getElementById('customActionStatus');
+  if(!st){
+    st=document.createElement('div');
+    st.id='customActionStatus';
+    st.className='custom-action-status muted';
+    saveBtn.insertAdjacentElement('afterend',st);
+  }
+  st.textContent='주문과 레시피 저장은 서로 별개로 진행됩니다.';
+
+  // Visible deployment marker so the deployed build can be identified instantly.
+  const page=document.getElementById('page-your');
+  if(page && !page.querySelector('.v349-runtime-badge')){
+    const badge=document.createElement('div');
+    badge.className='v349-runtime-badge';
+    badge.textContent='V3.4.9';
+    const hero=page.querySelector('.eyebrow');
+    if(hero) hero.appendChild(badge);
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  forceYourSaiOrderUI();
+  setTimeout(forceYourSaiOrderUI,100);
+  setTimeout(forceYourSaiOrderUI,500);
+});
