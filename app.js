@@ -1,3 +1,4 @@
+// SAI BUILD V3.5.0 REAL CHANGE 2026-08-17
 
 const DBKEY='sai_v23_db', VISITOR='sai_visitor_name';
 let DB=null, currentTab='home';
@@ -668,15 +669,33 @@ function buildYourSaiDetails(e){
   return `기주: ${e.bases.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 리큐르: ${e.liqs.map(x=>`${x.name} ${Number(x.oz).toFixed(1)}oz`).join(' + ')} / 음료: ${e.mixer} / 예상도수: ${e.abv.toFixed(0)}% / 예상맛: ${e.mystery?'측정 불가':(e.tags.join(' · ')||'-')}`;
 }
 function addYourSaiToOrder(){
-  const e=validateYourSaiSelection(); if(!e)return;
+  const e=validateYourSaiSelection();
+  if(!e) return;
+
   const customName=$('#customName')?.value.trim()||'당신의 사이';
   const price=Math.max(13000,Number(e.price||13000));
-  const item={id:'your-sai-'+Date.now(),name:`당신의 사이 · ${customName}`,price,qty:1,category:'시그니처 · 커스텀',details:buildYourSaiDetails(e)};
+  const item={
+    id:'your-sai-'+Date.now(),
+    name:`당신의 사이 · ${customName}`,
+    price,
+    qty:1,
+    category:'시그니처 · 커스텀',
+    details:buildYourSaiDetails(e)
+  };
+
   orderCart.push(item);
   saveOrderCart();
   updateCartCount();
-  const st=$('#customActionStatus'); if(st)st.textContent=`주문에 담겼어요 ✓ · ${money(price)}`;
-  const btn=$('#saveCustomSignature'); if(btn)btn.textContent='주문에 담김 ✓';
+
+  const st=$('#customActionStatus');
+  if(st) st.textContent=`주문에 담겼어요 ✓ · ${money(price)}`;
+
+  const btn=$('#saveCustomSignature');
+  if(btn){
+    btn.textContent='주문에 담김 ✓';
+    btn.classList.add('added');
+  }
+
   openOrderCart(true);
 }
 function saveYourSaiRecipeOnly(){
@@ -689,59 +708,37 @@ function saveYourSaiRecipeOnly(){
   alert('나만의 칵테일로 저장되었습니다.');
 }
 function updateCartCount(){const el=$('#cartCount');if(el)el.textContent=orderCart.reduce((s,x)=>s+Number(x.qty||0),0)}
-document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
-  const orderBtn=$('#saveCustomSignature'); if(orderBtn)orderBtn.onclick=addYourSaiToOrder;
-  const saveBtn=$('#saveCustomRecipeOnly'); if(saveBtn)saveBtn.onclick=saveYourSaiRecipeOnly;
-  updateCartCount();
-},220));
 
 
-// ===== V3.4.9 FORCE YOUR-SAI ORDER UI =====
-function forceYourSaiOrderUI(){
+
+
+
+// ===== SAI V3.5.0 YOUR-SAI ORDER BINDING =====
+window.SAI_BUILD='V3.5.0';
+function bindYourSaiOrderActions(){
   const orderBtn=document.getElementById('saveCustomSignature');
-  if(!orderBtn) return;
+  const saveBtn=document.getElementById('saveCustomRecipeOnly');
 
-  // Even if an older cached HTML is rendered, force the visible primary CTA to ordering.
-  orderBtn.type='button';
-  orderBtn.textContent='이 조합으로 주문에 담기';
-  orderBtn.classList.add('your-sai-order-btn');
-  orderBtn.onclick=addYourSaiToOrder;
+  if(orderBtn){
+    orderBtn.type='button';
+    orderBtn.textContent='이 조합으로 주문에 담기';
+    orderBtn.onclick=null;
+    orderBtn.addEventListener('click',addYourSaiToOrder,{once:false});
+  }
 
-  let saveBtn=document.getElementById('saveCustomRecipeOnly');
-  if(!saveBtn){
-    saveBtn=document.createElement('button');
-    saveBtn.id='saveCustomRecipeOnly';
-    saveBtn.type='button';
-    saveBtn.className='btn ghost your-sai-save-btn';
-    saveBtn.textContent='나만의 칵테일로 저장하기';
-    orderBtn.insertAdjacentElement('afterend',saveBtn);
-  }else{
+  if(saveBtn){
     saveBtn.type='button';
     saveBtn.textContent='나만의 칵테일로 저장하기';
+    saveBtn.onclick=null;
+    saveBtn.addEventListener('click',saveYourSaiRecipeOnly,{once:false});
   }
-  saveBtn.onclick=saveYourSaiRecipeOnly;
 
-  let st=document.getElementById('customActionStatus');
-  if(!st){
-    st=document.createElement('div');
-    st.id='customActionStatus';
-    st.className='custom-action-status muted';
-    saveBtn.insertAdjacentElement('afterend',st);
-  }
-  st.textContent='주문과 레시피 저장은 서로 별개로 진행됩니다.';
+  updateCartCount();
 
-  // Visible deployment marker so the deployed build can be identified instantly.
-  const page=document.getElementById('page-your');
-  if(page && !page.querySelector('.v349-runtime-badge')){
-    const badge=document.createElement('div');
-    badge.className='v349-runtime-badge';
-    badge.textContent='V3.4.9';
-    const hero=page.querySelector('.eyebrow');
-    if(hero) hero.appendChild(badge);
-  }
+  const marker=document.getElementById('v350DeployMarker');
+  if(marker) marker.textContent='V3.5.0 · ORDER READY';
 }
 document.addEventListener('DOMContentLoaded',()=>{
-  forceYourSaiOrderUI();
-  setTimeout(forceYourSaiOrderUI,100);
-  setTimeout(forceYourSaiOrderUI,500);
+  bindYourSaiOrderActions();
+  setTimeout(bindYourSaiOrderActions,250);
 });

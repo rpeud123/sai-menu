@@ -1,3 +1,4 @@
+/* SAI BUILD V3.5.0 REAL CHANGE 2026-08-17 */
 @import url('https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css');
 @font-face{font-family:'GMarketSans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');font-weight:300;font-display:swap}
 @font-face{font-family:'GMarketSans';src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');font-weight:500;font-display:swap}
@@ -120,3 +121,33 @@ body,input,textarea,button,select{font-family:'Wanted Sans',-apple-system,BlinkM
 .your-sai-save-btn{display:block!important;width:100%!important;min-height:50px!important;margin-top:10px!important;background:transparent!important;border:1px solid rgba(232,170,66,.45)!important;color:var(--text)!important;opacity:1!important;visibility:visible!important}
 .custom-action-status{display:block!important;text-align:center;margin:8px 4px 0;font-size:12px;color:var(--muted)}
 .build-version,.v349-runtime-badge{display:inline-flex;margin-left:8px;padding:2px 7px;border:1px solid rgba(232,170,66,.45);border-radius:999px;font-size:10px;letter-spacing:.08em;color:#e8aa42;vertical-align:middle}
+
+
+/* ===== SAI V3.5.0 REAL CHANGE ===== */
+.v350-deploy-marker{
+  display:inline-flex;
+  align-items:center;
+  margin:6px 0 12px;
+  padding:5px 9px;
+  border:1px solid rgba(230,171,72,.38);
+  border-radius:999px;
+  color:#e6ab48;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+#saveCustomSignature{
+  width:100%;
+  min-height:58px;
+  font-size:17px;
+  font-weight:900;
+}
+#saveCustomSignature.added{
+  background:#304a31 !important;
+  color:#fff !important;
+}
+#saveCustomRecipeOnly{
+  width:100%;
+  margin-top:10px;
+  min-height:48px;
+}
